@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">HeisenBears</string>
+    <string name="menu_acceuil">Acceuil</string>
+    <string name="menu_actu">Actualité</string>
+    <string name="menu_jeu">Le jeu</string>
+    <string name="menu_team">L\'équipe</string>
+    <string name="menu_rescal">Résultat et Calendrier</string>
+    <string name="menu_profil">Profil</string>
+    <string name="menu_propos">A propos</string>
+    <string name="menu_deco">Déconnexion</string>
+    <string name="connexion">Connexion via Facebook</string>
+    <string name="Skip">Passer cette étape</string>
+    <string name="Connection">Connection...</string>
+</resources>

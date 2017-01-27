@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">HeisenBears</string>
+
+    <string name="navigation_drawer_open" translatable="false">Open navigation drawer</string>
+    <string name="navigation_drawer_close" translatable="false">Close navigation drawer</string>
+    <string name="facebook_app_id" translatable="false">1783378521921664</string>
+    <string name="action_settings" translatable="false">Settings</string>
+    <string name="menu_acceuil">Home</string>
+    <string name="menu_actu">News</string>
+    <string name="menu_jeu">Game</string>
+    <string name="menu_team">The team</string>
+    <string name="menu_rescal">Results and Schedule</string>
+    <string name="menu_profil">Profil</string>
+    <string name="menu_propos">About</string>
+    <string name="menu_deco">Log out</string>
+    <string name="connexion">Log in with Facebook</string>
+    <string name="Skip">Skip this</string>
+    <string name="Connection">Connexion...</string>
+</resources>

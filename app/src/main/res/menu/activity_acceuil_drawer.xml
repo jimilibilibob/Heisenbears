@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu   xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_acceuil"
+            android:title="@string/menu_acceuil"
+            android:icon="@drawable/ic_home_black_24dp" />
+        <item
+            android:id="@+id/nav_actu"
+            android:title="@string/menu_actu"
+            android:icon="@drawable/ic_library_books_black_24dp"/>
+        <item
+            android:id="@+id/nav_jeu"
+            android:title="@string/menu_jeu"
+            android:icon="@drawable/ic_directions_run_black_24dp" />
+        <item
+            android:id="@+id/nav_equipe"
+            android:title="@string/menu_team"
+            android:icon="@drawable/ic_pets_black_24dp" />
+        <item
+            android:id="@+id/nav_resCal"
+            android:title="@string/menu_rescal"
+            android:icon="@drawable/ic_chrome_reader_mode_black_24dp" />
+        <item
+            android:id="@+id/nav_profil"
+            android:title="@string/menu_profil"
+            android:icon="@drawable/ic_person_black_24dp" />
+        <item
+            android:id="@+id/nav_propos"
+            android:title="@string/menu_propos"
+            android:icon="@drawable/ic_font_download_black_24dp" />
+        <item
+            android:id="@+id/nav_logout"
+            android:title="@string/menu_deco"
+            android:icon="@drawable/ic_power_settings_new_black_24dp" />
+
+    </group>
+
+</menu>
