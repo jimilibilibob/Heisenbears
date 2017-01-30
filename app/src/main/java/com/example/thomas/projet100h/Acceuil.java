@@ -116,7 +116,9 @@ public class Acceuil extends AppCompatActivity
         }else if (id == R.id.nav_propos) {
 
         }else if (id == R.id.nav_logout) {
-
+            intent = new Intent(this, pageConnection.class);
+            startActivity(intent);
+            finish();
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
@@ -129,7 +131,7 @@ public class Acceuil extends AppCompatActivity
             @Override
             protected String doInBackground(String... params) {
                 DefaultHttpClient httpclient = new DefaultHttpClient(new BasicHttpParams());
-                HttpPost httppost = new HttpPost("http://192.168.1.16/projet100h/listePubli.php");
+                HttpPost httppost = new HttpPost("http://192.168.1.18/projet100h/listePubli.php");
 
                 // Depends on your web service
                 httppost.setHeader("Content-type", "application/json");
@@ -208,7 +210,7 @@ public class Acceuil extends AppCompatActivity
             @Override
             protected String doInBackground(String... params) {
                 DefaultHttpClient httpclient = new DefaultHttpClient(new BasicHttpParams());
-                HttpPost httppost = new HttpPost("http://192.168.1.16/projet100h/ancrePubli.php");
+                HttpPost httppost = new HttpPost("http://192.168.1.18/projet100h/ancrePubli.php");
                 Log.e("Yo","1");
                 // Depends on your web service
                 httppost.setHeader("Content-type", "application/json");

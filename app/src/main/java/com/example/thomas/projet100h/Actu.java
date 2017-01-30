@@ -74,7 +74,9 @@ public class Actu extends AppCompatActivity implements NavigationView.OnNavigati
         }else if (id == R.id.nav_propos) {
 
         }else if (id == R.id.nav_logout) {
-
+            intent = new Intent(this, pageConnection.class);
+            startActivity(intent);
+            finish();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

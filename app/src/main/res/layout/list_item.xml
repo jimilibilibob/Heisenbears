@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:padding="10dp"
     android:paddingLeft="10dp"
-    android:paddingRight="10dp" >
+    android:paddingRight="10dp"
+    android:theme="@style/AppTheme"
+    android:background="@drawable/custom_border">
 
 
     <TextView
@@ -14,7 +17,8 @@
         android:layout_height="wrap_content"
         android:paddingBottom="2dip"
         android:paddingTop="6dip"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:background="@drawable/custom_border_ligne"/>
 
 
     <TextView
@@ -22,14 +26,16 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:paddingBottom="2dip"
-        android:textStyle="bold"/>
+        android:textStyle="bold"
+        android:background="@drawable/custom_border_ligne"/>
 
 
     <TextView
         android:id="@+id/address"
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:gravity="left"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:background="@drawable/custom_border_ligne"/>
 
 </LinearLayout>
