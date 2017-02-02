@@ -27,8 +27,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="63dp"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:onClick="On"/>
+        android:layout_centerHorizontal="true"/>
 
     <TextView
         android:text="@string/Skip"

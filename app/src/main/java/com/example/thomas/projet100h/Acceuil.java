@@ -1,6 +1,8 @@
 package com.example.thomas.projet100h;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -11,10 +13,13 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
+import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
+
+import com.facebook.login.LoginResult;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -28,8 +33,14 @@ import org.json.JSONObject;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
 
 public class Acceuil extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -38,14 +49,17 @@ public class Acceuil extends AppCompatActivity
     private String myJSON;
     private TextView textView;
     private static final String TAG_RESULTS="result";
-    private static final String TAG_ID = "nom";
-    private static final String TAG_NAME = "prenom";
-    private static final String TAG_ADD ="age";
+    private static final String TAG_TEXTE = "texte";
+    private static final String TAG_DATE = "date";
+    private static final String TAG_ID ="id";
+    private static final String TAG_IDMEDIA ="idMedia";
+    private static final String TAG_CONTENUMEDIA ="contenuMedia";
 
-    JSONArray peoples = null;
+    JSONArray publication = null;
     JSONArray ancre = null;
+    FileArrayAdapter adapter;
 
-    ArrayList<HashMap<String, String>> personList;
+    List<Publication> publications;
 
     ListView list;
     @Override
@@ -67,15 +81,9 @@ public class Acceuil extends AppCompatActivity
         textView = (TextView) findViewById(R.id.textView2);
 
         list = (ListView) findViewById(R.id.listView);
-        personList = new ArrayList<>();
-        ListAdapter adapter = new SimpleAdapter(
-                Acceuil.this, personList, R.layout.list_item,
-                new String[]{"Connection...","",""},
-                new int[]{R.id.id, R.id.name, R.id.address}
-        );
-        list.setAdapter(adapter);
+        publications = new ArrayList<>();
 
-        getDataAncre();
+
         getDataList();
 
     }
@@ -131,17 +139,15 @@ public class Acceuil extends AppCompatActivity
             @Override
             protected String doInBackground(String... params) {
                 DefaultHttpClient httpclient = new DefaultHttpClient(new BasicHttpParams());
-                HttpPost httppost = new HttpPost("http://192.168.1.18/projet100h/listePubli.php");
+                HttpPost httppost = new HttpPost("http://192.168.1.16/projet100h/listePubli.php");
 
                 // Depends on your web service
                 httppost.setHeader("Content-type", "application/json");
-                Log.i("5 dernières Publication", httppost.toString());
                 InputStream inputStream = null;
                 String result = null;
                 try {
                     HttpResponse response = httpclient.execute(httppost);
                     HttpEntity entity = response.getEntity();
-
                     inputStream = entity.getContent();
                     // json is UTF-8 by default
                     BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"), 8);
@@ -163,92 +169,33 @@ public class Acceuil extends AppCompatActivity
 
             @Override
             protected void onPostExecute(String result){
-                myJSON=result;
-                showList();
-            }
-        }
-        GetDataJSON g = new GetDataJSON();
-        g.execute();
-    }
-
-    protected void showList(){
-        try {
-            JSONObject jsonObj = new JSONObject(myJSON);
-            peoples = jsonObj.getJSONArray(TAG_RESULTS);
-
-            for(int i=0;i<peoples.length();i++){
-                JSONObject c = peoples.getJSONObject(i);
-                String id = c.getString(TAG_ID);
-                String name = c.getString(TAG_NAME);
-                String address =  Integer.toString(c.getInt(TAG_ADD));
-
-                HashMap<String,String> persons = new HashMap<>();
-
-                persons.put(TAG_ID,id);
-                persons.put(TAG_NAME,name);
-                persons.put(TAG_ADD,address);
-
-                personList.add(persons);
-            }
-
-            ListAdapter adapter = new SimpleAdapter(
-                    Acceuil.this, personList, R.layout.list_item,
-                    new String[]{TAG_ID,TAG_NAME,TAG_ADD},
-                    new int[]{R.id.id, R.id.name, R.id.address}
-            );
-
-            list.setAdapter(adapter);
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-    }
-    public void getDataAncre(){
-        class GetDataJSON extends AsyncTask<String, Void, String> {
-
-            @Override
-            protected String doInBackground(String... params) {
-                DefaultHttpClient httpclient = new DefaultHttpClient(new BasicHttpParams());
-                HttpPost httppost = new HttpPost("http://192.168.1.18/projet100h/ancrePubli.php");
-                Log.e("Yo","1");
-                // Depends on your web service
-                httppost.setHeader("Content-type", "application/json");
-                InputStream inputStream = null;
-                String result = null;
                 try {
-                    HttpResponse response = httpclient.execute(httppost);
-                    HttpEntity entity = response.getEntity();
+                    JSONObject jsonObj = new JSONObject(result);
+                    publication = jsonObj.getJSONArray(TAG_RESULTS);
+                    for(int i=0;i<publication.length();i++){
+                        JSONObject c = publication.getJSONObject(i);
+                        String  texte = c.getString(TAG_TEXTE);
+                        String  date = c.getString(TAG_DATE);
+                        String id = c.getString(TAG_ID);
+                        String  idmedia = c.getString(TAG_IDMEDIA) ;
+                        String media  = c.getString(TAG_CONTENUMEDIA);
+                        int idPubli = Integer.parseInt(id);
+                        int idmediaPubli = Integer.parseInt(idmedia);
+                        DateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.FRANCE);
+                        Date datePubli = format.parse(date);
+                        Publication publi = new Publication( media, texte, datePubli,  idPubli,  idmediaPubli);
 
-                    inputStream = entity.getContent();
-                    // json is UTF-8 by default
-                    BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"), 8);
-                    StringBuilder sb = new StringBuilder();
-                    String line = null;
-                    while ((line = reader.readLine()) != null)
-                    {
-                        sb.append(line + "\n");
+                        publications.add(publi);
                     }
-                    result = sb.toString();
-                } catch (Exception e) {
-                }
-                finally {
-                    try{if(inputStream != null)inputStream.close();}catch(Exception squish){}
-                }
-                return result;
 
-            }
+                    adapter = new FileArrayAdapter(
+                            Acceuil.this, R.layout.list_item, publications, 1);
+                    adapter.setNotifyOnChange(true);
 
-            @Override
-            protected void onPostExecute(String result){
-                myJSON = result;
-                try {
-                    JSONObject jsonObj = new JSONObject(myJSON);
-                    ancre = jsonObj.getJSONArray(TAG_RESULTS);
-                    JSONObject c = ancre.getJSONObject(0);
-                    String id = c.getString(TAG_ID);
-                    textView.setText(id);
+                    list.setAdapter(adapter);
                 } catch (JSONException e) {
+                    e.printStackTrace();
+                } catch (ParseException e) {
                     e.printStackTrace();
                 }
             }
@@ -256,6 +203,9 @@ public class Acceuil extends AppCompatActivity
         GetDataJSON g = new GetDataJSON();
         g.execute();
     }
+
+
+
 
 
 }
