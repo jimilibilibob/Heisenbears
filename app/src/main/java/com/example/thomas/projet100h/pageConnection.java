@@ -28,23 +28,18 @@ public class pageConnection extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         FacebookSdk.sdkInitialize(getApplicationContext());
         i = new Intent(this, Acceuil.class);
-
         setContentView(R.layout.activity_page_connection);
         callbackManager = CallbackManager.Factory.create();
-
         loginButton = (LoginButton) findViewById(R.id.loginButton);
         loginButton.setReadPermissions("email");
+        Log.e("yo",callbackManager.toString());
+
 
         loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
 
             @Override
             public void onSuccess(LoginResult loginResult) {
-
-              Log.e("Yo","User ID: "
-                      + loginResult.getAccessToken().getUserId()
-                      + "\n" +
-                      "Auth Token: "
-                      + loginResult.getAccessToken().getToken());
+                i.putExtra("id",loginResult.getAccessToken().getUserId());
                 startActivity(i);
             }
 
@@ -69,7 +64,10 @@ public class pageConnection extends AppCompatActivity {
 
 
 
-
+    public void onClick(View V){
+        i.putExtra("id",0);
+        startActivity(i);
+    }
 
 }
 

@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -54,10 +55,12 @@ public class Acceuil extends AppCompatActivity
     private static final String TAG_ID ="id";
     private static final String TAG_IDMEDIA ="idMedia";
     private static final String TAG_CONTENUMEDIA ="contenuMedia";
+    private static final String TAG_URL ="http://192.168.1.16/projet100h/";
 
     JSONArray publication = null;
     JSONArray ancre = null;
     FileArrayAdapter adapter;
+    int idFacebook;
 
     List<Publication> publications;
 
@@ -74,6 +77,9 @@ public class Acceuil extends AppCompatActivity
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
+
+        intent = new Intent(this, Acceuil.class);
+        idFacebook = intent.getIntExtra("id",0);
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
@@ -139,7 +145,7 @@ public class Acceuil extends AppCompatActivity
             @Override
             protected String doInBackground(String... params) {
                 DefaultHttpClient httpclient = new DefaultHttpClient(new BasicHttpParams());
-                HttpPost httppost = new HttpPost("http://192.168.1.16/projet100h/listePubli.php");
+                HttpPost httppost = new HttpPost(TAG_URL +"php/listePubli.php");
 
                 // Depends on your web service
                 httppost.setHeader("Content-type", "application/json");

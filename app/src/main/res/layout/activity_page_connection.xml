@@ -10,32 +10,27 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.thomas.projet100h.pageConnection"
-    android:background="@drawable/fond_acceuil">
+    android:background="@drawable/fond">
 
-    <ImageView
+    <TextView
+        android:text="@string/Skip"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:srcCompat="@drawable/image_connection"
-        android:id="@+id/imageView2"
-        android:layout_marginBottom="74dp"
+        android:id="@+id/textView"
+        android:textColor="@color/com_facebook_button_login_silver_background_color"
+        android:onClick="onClick"
+        android:textAlignment="center"
+        android:textSize="14sp"
+        android:layout_marginBottom="62dp"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_height="20dp" />
 
     <com.facebook.login.widget.LoginButton
         android:id="@+id/loginButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="63dp"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"/>
-
-    <TextView
-        android:text="@string/Skip"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_centerHorizontal="true"
-        android:id="@+id/textView"
-        android:textColor="@color/com_facebook_button_login_silver_background_color"
-        android:layout_below="@+id/imageView2" />
+        android:layout_marginBottom="29dp"
+        android:layout_above="@+id/textView"
+        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>

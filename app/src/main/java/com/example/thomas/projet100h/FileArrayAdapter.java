@@ -3,12 +3,9 @@ package com.example.thomas.projet100h;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.graphics.Movie;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
-import android.support.v4.content.ContextCompat;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,31 +13,11 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.VideoView;
-
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.BufferedHttpEntity;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.params.BasicHttpParams;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 
 public class FileArrayAdapter extends ArrayAdapter<Publication> {
@@ -48,7 +25,7 @@ public class FileArrayAdapter extends ArrayAdapter<Publication> {
     private int id;
     private List<Publication> items;
     ImageView image;
-    private Bitmap bmp;
+    private static Bitmap bmp;
 
     public FileArrayAdapter(Context context, int textViewResourceId,
                             List<Publication> objects, int idStatut) {
@@ -87,25 +64,27 @@ public class FileArrayAdapter extends ArrayAdapter<Publication> {
         View layout2 =  v.findViewById(R.id.layout2);
         View layout3 =  v.findViewById(R.id.layout3);
 
+
         if (o != null) {
+
+            String texte = o.getTexte();
+            String media = o.getMedia();
 
             if (o.getIdMedia() == 1) {
                 layout3.setVisibility(View.GONE);
                 layout2.setVisibility(View.GONE);
                 layout1.setVisibility(View.VISIBLE);
-                String texte = o.getTexte().toString();
-                String title = o.getMedia().toString();
-                if (texte != null && title != null) {
-                    texte1.setText(texte);
-                    titre.setText(title);
+                if (!texte.equals("null") && !media.equals("null")) {
+                        texte1.setText(texte);
+                    titre.setText(media);
                 }
-                if (texte != null && title == null) {
+                if (!texte.equals("null") && media.equals("null")) {
                     titre.setVisibility(View.GONE);
                     texte1.setText(texte);
                 }
-                if (texte == null && title != null) {
+                if (texte.equals("null") && !media.equals("null")) {
                     texte1.setVisibility(View.GONE);
-                    titre.setText(title);
+                    titre.setText(media);
                 }
 
             }
@@ -113,16 +92,15 @@ public class FileArrayAdapter extends ArrayAdapter<Publication> {
                 layout1.setVisibility(View.GONE);
                 layout3.setVisibility(View.GONE);
                 layout2.setVisibility(View.VISIBLE);
-                String texte = o.getTexte().toString();
-                String url = o.getMedia().toString();
-                if (texte != null && url != null) {
+                if (!texte.equals("null") && !media.equals("null")) {
                     texte2.setText(texte);
+                    image.setImageBitmap(getBitmapFromURL());
                 }
-                if (texte != null && url == null) {
+                if (!texte.equals("null") && media.equals("null")) {
                     image.setVisibility(View.GONE);
                     texte2.setText(texte);
                 }
-                if (texte == null && url != null) {
+                if (texte.equals("null") && !media.equals("null")) {
                     texte2.setVisibility(View.GONE);
 
 
@@ -132,21 +110,19 @@ public class FileArrayAdapter extends ArrayAdapter<Publication> {
                 layout2.setVisibility(View.GONE);
                 layout1.setVisibility(View.GONE);
                 layout3.setVisibility(View.VISIBLE);
-                String texte = o.getTexte().toString();
-                String url = o.getMedia().toString();
-                if (texte != null && url != null) {
+                if (!texte.equals("null") && !media.equals("null")) {
                     texte3.setText(texte);
-                    int imageResource = c.getResources().getIdentifier(url, null, c.getPackageName());
+                    int imageResource = c.getResources().getIdentifier(media, null, c.getPackageName());
                     Drawable image2 = c.getResources().getDrawable(imageResource);
                     image.setImageDrawable(image2);
                 }
-                if (texte != null && url == null) {
+                if (!texte.equals("null") && media.equals("null")) {
                     video.setVisibility(View.GONE);
                     texte3.setText(texte);
                 }
-                if (texte == null && url != null) {
+                if (texte.equals("null") && !media.equals("null")) {
                     texte3.setVisibility(View.GONE);
-                    int videoResource = c.getResources().getIdentifier(url, null, c.getPackageName());
+                    int videoResource = c.getResources().getIdentifier(media, null, c.getPackageName());
                     Movie movie = c.getResources().getMovie(videoResource);
                 }
             }
@@ -158,6 +134,34 @@ public class FileArrayAdapter extends ArrayAdapter<Publication> {
 
 
 
+
+
+
+    public static Bitmap getBitmapFromURL() {
+        class GetDataJSON extends AsyncTask<String, Void, String> {
+
+            @Override
+            protected String doInBackground(String... params) {
+                try {
+                    URL url = new URL("http://192.168.1.16/projet100h/img/logoAppli.jpg");
+                    HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                    connection.setDoInput(true);
+                    connection.connect();
+                    InputStream input = connection.getInputStream();
+                    Bitmap myBitmap = BitmapFactory.decodeStream(input);
+                    bmp = myBitmap;
+                } catch (IOException e) {
+                    // Log exception
+                    return null;
+                }
+                return null;
+
+            }
+
+
+        }
+        return bmp;
+    }
 
 
 
