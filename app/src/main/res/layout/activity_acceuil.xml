@@ -18,7 +18,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fitsSystemWindows="true"
-        tools:context="com.example.thomas.projet100h.Acceuil">
+        tools:context="com.example.thomas.projet100h.Activity.Acceuil">
 
         <android.support.design.widget.AppBarLayout
             android:layout_width="match_parent"

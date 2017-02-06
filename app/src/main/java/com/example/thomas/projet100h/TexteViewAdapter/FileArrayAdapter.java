@@ -1,4 +1,4 @@
-package com.example.thomas.projet100h;
+package com.example.thomas.projet100h.TexteViewAdapter;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -6,6 +6,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Movie;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,9 +14,13 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.VideoView;
+
+import com.example.thomas.projet100h.R;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
 
@@ -94,7 +99,8 @@ public class FileArrayAdapter extends ArrayAdapter<Publication> {
                 layout2.setVisibility(View.VISIBLE);
                 if (!texte.equals("null") && !media.equals("null")) {
                     texte2.setText(texte);
-                    image.setImageBitmap(getBitmapFromURL());
+
+
                 }
                 if (!texte.equals("null") && media.equals("null")) {
                     image.setVisibility(View.GONE);

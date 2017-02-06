@@ -1,18 +1,17 @@
-package com.example.thomas.projet100h;
+package com.example.thomas.projet100h.Activity;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.TextView;
 
+import com.example.thomas.projet100h.Activity.Acceuil;
+import com.example.thomas.projet100h.R;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
-import com.facebook.appevents.AppEventsLogger;
-import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 
@@ -33,6 +32,7 @@ public class pageConnection extends AppCompatActivity {
         loginButton = (LoginButton) findViewById(R.id.loginButton);
         loginButton.setReadPermissions("email");
         Log.e("yo",callbackManager.toString());
+
 
 
         loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {

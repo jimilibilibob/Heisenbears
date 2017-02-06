@@ -1,4 +1,4 @@
-package com.example.thomas.projet100h;
+package com.example.thomas.projet100h.TexteViewAdapter;
 
 
 import java.util.Date;

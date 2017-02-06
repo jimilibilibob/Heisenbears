@@ -1,8 +1,6 @@
-package com.example.thomas.projet100h;
+package com.example.thomas.projet100h.Activity;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -13,17 +11,16 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.ImageView;
-import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
-import com.facebook.login.LoginResult;
+import com.example.thomas.projet100h.TexteViewAdapter.FileArrayAdapter;
+import com.example.thomas.projet100h.TexteViewAdapter.Publication;
+import com.example.thomas.projet100h.R;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
+import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.params.BasicHttpParams;
@@ -39,7 +36,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
@@ -49,19 +45,17 @@ public class Acceuil extends AppCompatActivity
     private Intent intent;
     private String myJSON;
     private TextView textView;
-    private static final String TAG_RESULTS="result";
     private static final String TAG_TEXTE = "texte";
-    private static final String TAG_DATE = "date";
-    private static final String TAG_ID ="id";
+    private static final String TAG_DATE = "datePublication";
+    private static final String TAG_ID ="IdPublication";
     private static final String TAG_IDMEDIA ="idMedia";
     private static final String TAG_CONTENUMEDIA ="contenuMedia";
-    private static final String TAG_URL ="http://192.168.1.16/projet100h/";
+    private static final String TAG_URL_LIST ="http://192.168.1.16:8080/heisenbears/list/accueil";
+    private static final String TAG_URL_ANCRE ="http://192.168.1.16:8080/heisenbears/ancre";
 
-    JSONArray publication = null;
-    JSONArray ancre = null;
+    String ancre;
     FileArrayAdapter adapter;
     int idFacebook;
-
     List<Publication> publications;
 
     ListView list;
@@ -89,7 +83,7 @@ public class Acceuil extends AppCompatActivity
         list = (ListView) findViewById(R.id.listView);
         publications = new ArrayList<>();
 
-
+        getDataAncre();
         getDataList();
 
     }
@@ -103,8 +97,6 @@ public class Acceuil extends AppCompatActivity
             super.onBackPressed();
         }
     }
-
-
 
 
 
@@ -145,22 +137,24 @@ public class Acceuil extends AppCompatActivity
             @Override
             protected String doInBackground(String... params) {
                 DefaultHttpClient httpclient = new DefaultHttpClient(new BasicHttpParams());
-                HttpPost httppost = new HttpPost(TAG_URL +"php/listePubli.php");
-
+                HttpGet httpget = new HttpGet(TAG_URL_LIST);
                 // Depends on your web service
-                httppost.setHeader("Content-type", "application/json");
+                httpget.setHeader("Content-type", "application/json");
                 InputStream inputStream = null;
                 String result = null;
                 try {
-                    HttpResponse response = httpclient.execute(httppost);
+                    HttpResponse response = httpclient.execute(httpget);
+                    Log.e("ae",response.getStatusLine().toString());
                     HttpEntity entity = response.getEntity();
                     inputStream = entity.getContent();
                     // json is UTF-8 by default
                     BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"), 8);
                     StringBuilder sb = new StringBuilder();
+                    Log.e("YP",sb.toString());
                     String line = null;
                     while ((line = reader.readLine()) != null)
                     {
+                        Log.e("YP",line);
                         sb.append(line + "\n");
                     }
                     result = sb.toString();
@@ -169,17 +163,17 @@ public class Acceuil extends AppCompatActivity
                 finally {
                     try{if(inputStream != null)inputStream.close();}catch(Exception squish){}
                 }
-
+                Log.e("yo",result);
                 return result;
             }
 
             @Override
             protected void onPostExecute(String result){
                 try {
-                    JSONObject jsonObj = new JSONObject(result);
-                    publication = jsonObj.getJSONArray(TAG_RESULTS);
-                    for(int i=0;i<publication.length();i++){
-                        JSONObject c = publication.getJSONObject(i);
+
+                    JSONArray jsonObj = new JSONArray(result);
+                    for(int i=0;i<jsonObj.length();i++){
+                        JSONObject c = jsonObj.getJSONObject(i);
                         String  texte = c.getString(TAG_TEXTE);
                         String  date = c.getString(TAG_DATE);
                         String id = c.getString(TAG_ID);
@@ -187,7 +181,7 @@ public class Acceuil extends AppCompatActivity
                         String media  = c.getString(TAG_CONTENUMEDIA);
                         int idPubli = Integer.parseInt(id);
                         int idmediaPubli = Integer.parseInt(idmedia);
-                        DateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.FRANCE);
+                        DateFormat format = new SimpleDateFormat("MMM dd, yyyy", Locale.FRANCE);
                         Date datePubli = format.parse(date);
                         Publication publi = new Publication( media, texte, datePubli,  idPubli,  idmediaPubli);
 
@@ -210,6 +204,73 @@ public class Acceuil extends AppCompatActivity
         g.execute();
     }
 
+    public void getDataAncre(){
+        class GetDataJSON extends AsyncTask<String, Void, String> {
+
+            @Override
+            protected String doInBackground(String... params) {
+                DefaultHttpClient httpclient = new DefaultHttpClient(new BasicHttpParams());
+                HttpGet httpget = new HttpGet(TAG_URL_ANCRE);
+                // Depends on your web service
+                httpget.setHeader("Content-type", "application/json");
+                InputStream inputStream = null;
+                String result = null;
+                try {
+                    HttpResponse response = httpclient.execute(httpget);
+                    Log.e("ae",response.getStatusLine().toString());
+                    HttpEntity entity = response.getEntity();
+                    inputStream = entity.getContent();
+                    // json is UTF-8 by default
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"), 8);
+                    StringBuilder sb = new StringBuilder();
+                    Log.e("YP",sb.toString());
+                    String line = null;
+                    while ((line = reader.readLine()) != null)
+                    {
+                        Log.e("YP",line);
+                        sb.append(line + "\n");
+                    }
+                    result = sb.toString();
+                } catch (Exception e) {
+                }
+                finally {
+                    try{if(inputStream != null)inputStream.close();}catch(Exception squish){}
+                }
+                Log.e("yo",result);
+                return result;
+            }
+
+            @Override
+            protected void onPostExecute(String result){
+                try {
+
+                    JSONObject c = new JSONObject(result);
+                    String  texte = c.getString(TAG_TEXTE);
+                    String  date = c.getString(TAG_DATE);
+                    String id = c.getString(TAG_ID);
+                    String  idmedia = c.getString(TAG_IDMEDIA) ;
+                    String media  = c.getString(TAG_CONTENUMEDIA);
+                    int idPubli = Integer.parseInt(id);
+                    int idmediaPubli = Integer.parseInt(idmedia);
+                    DateFormat format = new SimpleDateFormat("MMM dd, yyyy", Locale.FRANCE);
+                    Date datePubli = format.parse(date);
+                    Log.e("Yop",texte);
+                    ancre = texte;
+
+                } catch (ParseException e1) {
+                    e1.printStackTrace();
+                } catch (JSONException e1) {
+                    e1.printStackTrace();
+                }
+
+                textView.setText(ancre);
+
+
+            }
+        }
+        GetDataJSON g = new GetDataJSON();
+        g.execute();
+    }
 
 
 
