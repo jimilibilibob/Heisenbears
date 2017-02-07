@@ -1,4 +1,4 @@
-package com.example.thomas.projet100h.TexteViewAdapter;
+package com.example.thomas.projet100h.Utilities;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -6,7 +6,6 @@ import android.graphics.BitmapFactory;
 import android.graphics.Movie;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,11 +15,11 @@ import android.widget.TextView;
 import android.widget.VideoView;
 
 import com.example.thomas.projet100h.R;
+import com.example.thomas.projet100h.entities.Publication;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
 

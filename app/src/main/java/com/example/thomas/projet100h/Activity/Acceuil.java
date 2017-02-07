@@ -14,14 +14,13 @@ import android.view.MenuItem;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.example.thomas.projet100h.TexteViewAdapter.FileArrayAdapter;
-import com.example.thomas.projet100h.TexteViewAdapter.Publication;
+import com.example.thomas.projet100h.Utilities.FileArrayAdapter;
+import com.example.thomas.projet100h.entities.Publication;
 import com.example.thomas.projet100h.R;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.params.BasicHttpParams;
 import org.json.JSONArray;
