@@ -49,12 +49,12 @@ public class Acceuil extends AppCompatActivity
     private static final String TAG_ID ="IdPublication";
     private static final String TAG_IDMEDIA ="idMedia";
     private static final String TAG_CONTENUMEDIA ="contenuMedia";
-    private static final String TAG_URL_LIST ="http://192.168.1.16:8080/heisenbears/list/accueil";
-    private static final String TAG_URL_ANCRE ="http://192.168.1.16:8080/heisenbears/ancre";
+    private static final String TAG_URL_LIST ="http://192.168.43.96:8080/heisenbears/list/";
+    private static final String TAG_URL_ANCRE ="http://192.168.43.96:8080/heisenbears/ancre";
 
     String ancre;
     FileArrayAdapter adapter;
-    int idFacebook;
+    String idFacebook;
     List<Publication> publications;
 
     ListView list;
@@ -71,8 +71,8 @@ public class Acceuil extends AppCompatActivity
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-        intent = new Intent(this, Acceuil.class);
-        idFacebook = intent.getIntExtra("id",0);
+        intent = new Intent();
+        idFacebook = intent.getStringExtra("id");
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
@@ -136,7 +136,8 @@ public class Acceuil extends AppCompatActivity
             @Override
             protected String doInBackground(String... params) {
                 DefaultHttpClient httpclient = new DefaultHttpClient(new BasicHttpParams());
-                HttpGet httpget = new HttpGet(TAG_URL_LIST);
+                Log.e("URL",TAG_URL_LIST+idFacebook+"-0");
+                HttpGet httpget = new HttpGet(TAG_URL_LIST+idFacebook+"-0");
                 // Depends on your web service
                 httpget.setHeader("Content-type", "application/json");
                 InputStream inputStream = null;

@@ -18,7 +18,7 @@ import java.io.InputStreamReader;
 
 public class Connection extends AsyncTask<String, Void, String> {
 
-    private static final String TAG_URL_USER ="http://192.168.1.16:8080/heisenbears/user/";
+    private static final String TAG_URL_USER ="http://192.168.43.96:8080/heisenbears/user/";
     private String URL;
 
     public Connection(String id){

@@ -40,7 +40,7 @@ public class pageConnection extends AppCompatActivity {
 
             @Override
             public void onSuccess(LoginResult loginResult) {
-
+                Log.e("Acces",loginResult.getAccessToken().toString());
                 id = loginResult.getAccessToken().getUserId();
                 Log.e("Yo",id);
 
@@ -71,7 +71,6 @@ public class pageConnection extends AppCompatActivity {
 
 
     public void onClick(View V){
-        i.putExtra("id",0);
         startActivity(i);
     }
 
