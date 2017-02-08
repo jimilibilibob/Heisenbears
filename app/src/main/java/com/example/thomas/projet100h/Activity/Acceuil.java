@@ -72,7 +72,7 @@ public class Acceuil extends AppCompatActivity
         toggle.syncState();
 
         intent = new Intent();
-        idFacebook = intent.getStringExtra("id");
+        idFacebook = intent.getIntExtra("id",1)+"";
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
