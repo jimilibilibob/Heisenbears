@@ -1,7 +1,11 @@
 package com.example.thomas.projet100h.Utilities;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.util.Log;
+
+import com.example.thomas.projet100h.Activity.Acceuil;
+import com.example.thomas.projet100h.Activity.pageConnection;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -20,8 +24,10 @@ public class Connection extends AsyncTask<String, Void, String> {
 
     private static final String TAG_URL_USER ="http://192.168.43.96:8080/heisenbears/user/";
     private String URL;
-
+    private String id;
+    private int idStatut;
     public Connection(String id){
+        this.id = id;
         this.URL = this.TAG_URL_USER + id;
     }
 
@@ -56,7 +62,6 @@ public class Connection extends AsyncTask<String, Void, String> {
             // json is UTF-8 by default
             BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"), 8);
             StringBuilder sb = new StringBuilder();
-            Log.e("YP",sb.toString());
             String line = null;
             while ((line = reader.readLine()) != null)
             {
@@ -78,19 +83,18 @@ public class Connection extends AsyncTask<String, Void, String> {
             JSONObject jsonObj = new JSONObject(result);
             String  nom = jsonObj.getString("nom");
             String  prenom = jsonObj.getString("prenom");
-            String idStatut = jsonObj.getString("idStatut");
+            idStatut = jsonObj.getInt("idStatut");
             Log.e("nom", nom);
             Log.e("prenom", prenom);
-            Log.e("idStatut", idStatut);
-
+            Log.e("idStatut", idStatut+"");
 
         }  catch (JSONException e) {
             e.printStackTrace();
         }
 
-
     }
 
-
-
+    public int getIdStatut() {
+        return idStatut;
+    }
 }

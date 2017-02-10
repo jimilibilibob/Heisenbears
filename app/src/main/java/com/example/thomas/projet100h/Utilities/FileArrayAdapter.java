@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.VideoView;
@@ -30,6 +31,7 @@ public class FileArrayAdapter extends ArrayAdapter<Publication> {
     private List<Publication> items;
     ImageView image;
     private static Bitmap bmp;
+    int idStatut;
 
     public FileArrayAdapter(Context context, int textViewResourceId,
                             List<Publication> objects, int idStatut) {
@@ -37,7 +39,7 @@ public class FileArrayAdapter extends ArrayAdapter<Publication> {
         c = context;
         id = textViewResourceId;
         items = objects;
-
+        this.idStatut = idStatut;
 
     }
 
@@ -67,7 +69,12 @@ public class FileArrayAdapter extends ArrayAdapter<Publication> {
         View layout1 =  v.findViewById(R.id.layout1);
         View layout2 =  v.findViewById(R.id.layout2);
         View layout3 =  v.findViewById(R.id.layout3);
-
+        Button btn1 = (Button) v.findViewById(R.id.button2);
+        Button btn2 = (Button) v.findViewById(R.id.button3);
+        Button btn3 = (Button) v.findViewById(R.id.button4);
+        btn1.setVisibility(View.GONE);
+        btn2.setVisibility(View.GONE);
+        btn3.setVisibility(View.GONE);
 
         if (o != null) {
 
@@ -91,6 +98,10 @@ public class FileArrayAdapter extends ArrayAdapter<Publication> {
                     titre.setText(media);
                 }
 
+                if(idStatut == 3 || idStatut == 4){
+                    btn1.setVisibility(View.VISIBLE);
+                }
+
             }
             if (o.getIdMedia() == 2) {
                 layout1.setVisibility(View.GONE);
@@ -110,6 +121,11 @@ public class FileArrayAdapter extends ArrayAdapter<Publication> {
 
 
                 }
+
+                if(idStatut == 3 || idStatut == 4){
+                    btn2.setVisibility(View.VISIBLE);
+                }
+
             }
             if (o.getIdMedia() == 3) {
                 layout2.setVisibility(View.GONE);
@@ -129,6 +145,10 @@ public class FileArrayAdapter extends ArrayAdapter<Publication> {
                     texte3.setVisibility(View.GONE);
                     int videoResource = c.getResources().getIdentifier(media, null, c.getPackageName());
                     Movie movie = c.getResources().getMovie(videoResource);
+                }
+
+                if(idStatut == 3 || idStatut == 4){
+                    btn3.setVisibility(View.VISIBLE);
                 }
             }
 

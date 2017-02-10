@@ -17,14 +17,26 @@
         android:layout_height="match_parent"
         android:id="@+id/layout1">
 
-        <TextView
-            android:id="@+id/titre"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingBottom="2dip"
-            android:textStyle="bold"
+        <RelativeLayout
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp">
 
-            android:textSize="20sp"/>
+            <TextView
+                android:id="@+id/titre"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:paddingBottom="2dip"
+                android:textStyle="bold"
+                android:textSize="20sp"/>
+
+            <Button
+                android:layout_width="30dp"
+                android:id="@+id/button2"
+                android:layout_height="30dp"
+                android:layout_alignParentEnd="true"
+                android:background="@mipmap/ic_parametre_list_item" />
+        </RelativeLayout>
 
         <TextView
             android:id="@+id/texte1"
@@ -55,14 +67,29 @@
                 android:maxWidth="100dp"
                 android:maxHeight="100dp"/>
 
-            <TextView
+            <RelativeLayout
+                android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/texte2"
-                android:layout_weight="1"
-                android:maxWidth="100dp"
-                android:maxHeight="100dp"
-                android:textSize="14sp"/>
+                android:layout_weight="1">
+
+                <Button
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:id="@+id/button3"
+                    android:layout_alignParentEnd="true"
+                    android:background="@mipmap/ic_parametre_list_item" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/texte2"
+                    android:maxWidth="100dp"
+                    android:maxHeight="100dp"
+                    android:textSize="14sp"
+                    android:layout_alignParentStart="true"/>
+            </RelativeLayout>
+
         </LinearLayout>
 
     </LinearLayout>
@@ -85,14 +112,28 @@
                 android:gravity="left"
                 android:layout_weight="1" />
 
-            <TextView
-                android:id="@+id/texte3"
+            <RelativeLayout
+                android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="right"
-                android:textStyle="bold"
-                android:layout_weight="1"
-                android:textSize="14sp"/>
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <Button
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:id="@+id/button4"
+                    android:layout_alignParentEnd="true"
+                    android:background="@mipmap/ic_parametre_list_item" />
+
+                <TextView
+                    android:id="@+id/texte3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:textStyle="bold"
+                    android:textSize="14sp"/>
+            </RelativeLayout>
+
         </LinearLayout>
 
     </LinearLayout>

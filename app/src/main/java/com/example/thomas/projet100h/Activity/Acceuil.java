@@ -52,12 +52,13 @@ public class Acceuil extends AppCompatActivity
     private static final String TAG_URL_LIST ="http://192.168.43.96:8080/heisenbears/list/";
     private static final String TAG_URL_ANCRE ="http://192.168.43.96:8080/heisenbears/ancre";
 
-    String ancre;
-    FileArrayAdapter adapter;
-    String idFacebook;
-    List<Publication> publications;
+    private String ancre;
+    private FileArrayAdapter adapter;
+    private String idFacebook;
+    private int idStatut;
+    private List<Publication> publications;
 
-    ListView list;
+    private ListView list;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,9 +72,13 @@ public class Acceuil extends AppCompatActivity
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-        intent = new Intent();
-        idFacebook = intent.getIntExtra("id",1)+"";
 
+        Log.e("intent",getIntent().getStringExtra("id"));
+        idFacebook = getIntent().getStringExtra("id");
+        idStatut = getIntent().getIntExtra("idStatut",1);
+
+
+        Log.e("idStatut",idStatut+"");
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
@@ -108,6 +113,8 @@ public class Acceuil extends AppCompatActivity
         if (id == R.id.nav_acceuil) {
         } else if (id  == R.id.nav_actu) {
             intent = new Intent(this, Actu.class);
+            intent.putExtra("id",idFacebook);
+            intent.putExtra("idF",idStatut);
             startActivity(intent);
             finish();
         } else if (id == R.id.nav_jeu) {
@@ -137,7 +144,7 @@ public class Acceuil extends AppCompatActivity
             protected String doInBackground(String... params) {
                 DefaultHttpClient httpclient = new DefaultHttpClient(new BasicHttpParams());
                 Log.e("URL",TAG_URL_LIST+idFacebook+"-0");
-                HttpGet httpget = new HttpGet(TAG_URL_LIST+idFacebook+"-0");
+                HttpGet httpget = new HttpGet(TAG_URL_LIST+idStatut+"-0");
                 // Depends on your web service
                 httpget.setHeader("Content-type", "application/json");
                 InputStream inputStream = null;
@@ -189,7 +196,7 @@ public class Acceuil extends AppCompatActivity
                     }
 
                     adapter = new FileArrayAdapter(
-                            Acceuil.this, R.layout.list_item, publications, 1);
+                            Acceuil.this, R.layout.list_item, publications, idStatut);
                     adapter.setNotifyOnChange(true);
 
                     list.setAdapter(adapter);
