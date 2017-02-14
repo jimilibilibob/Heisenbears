@@ -1,5 +1,6 @@
 package com.example.thomas.projet100h.Activity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.design.widget.NavigationView;
@@ -38,6 +39,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import static com.example.thomas.projet100h.Activity.pageConnection.user;
+
 public class Acceuil extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -49,13 +52,12 @@ public class Acceuil extends AppCompatActivity
     private static final String TAG_ID ="IdPublication";
     private static final String TAG_IDMEDIA ="idMedia";
     private static final String TAG_CONTENUMEDIA ="contenuMedia";
-    private static final String TAG_URL_LIST ="http://192.168.43.96:8080/heisenbears/list/";
-    private static final String TAG_URL_ANCRE ="http://192.168.43.96:8080/heisenbears/ancre";
+    private static final String TAG_VISIBILITY ="validation";
+    private static final String TAG_URL_LIST ="http://lowcost-env.pq8h39sfav.us-west-2.elasticbeanstalk.com/list/";
+    private static final String TAG_URL_ANCRE ="http://lowcost-env.pq8h39sfav.us-west-2.elasticbeanstalk.com/ancre";
 
     private String ancre;
     private FileArrayAdapter adapter;
-    private String idFacebook;
-    private int idStatut;
     private List<Publication> publications;
 
     private ListView list;
@@ -73,12 +75,6 @@ public class Acceuil extends AppCompatActivity
         toggle.syncState();
 
 
-        Log.e("intent",getIntent().getStringExtra("id"));
-        idFacebook = getIntent().getStringExtra("id");
-        idStatut = getIntent().getIntExtra("idStatut",1);
-
-
-        Log.e("idStatut",idStatut+"");
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
@@ -86,7 +82,6 @@ public class Acceuil extends AppCompatActivity
 
         list = (ListView) findViewById(R.id.listView);
         publications = new ArrayList<>();
-
         getDataAncre();
         getDataList();
 
@@ -113,8 +108,6 @@ public class Acceuil extends AppCompatActivity
         if (id == R.id.nav_acceuil) {
         } else if (id  == R.id.nav_actu) {
             intent = new Intent(this, Actu.class);
-            intent.putExtra("id",idFacebook);
-            intent.putExtra("idF",idStatut);
             startActivity(intent);
             finish();
         } else if (id == R.id.nav_jeu) {
@@ -143,25 +136,21 @@ public class Acceuil extends AppCompatActivity
             @Override
             protected String doInBackground(String... params) {
                 DefaultHttpClient httpclient = new DefaultHttpClient(new BasicHttpParams());
-                Log.e("URL",TAG_URL_LIST+idFacebook+"-0");
-                HttpGet httpget = new HttpGet(TAG_URL_LIST+idStatut+"-0");
+                HttpGet httpget = new HttpGet(TAG_URL_LIST+"1"+"-0");
                 // Depends on your web service
                 httpget.setHeader("Content-type", "application/json");
                 InputStream inputStream = null;
                 String result = null;
                 try {
                     HttpResponse response = httpclient.execute(httpget);
-                    Log.e("ae",response.getStatusLine().toString());
                     HttpEntity entity = response.getEntity();
                     inputStream = entity.getContent();
                     // json is UTF-8 by default
                     BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"), 8);
                     StringBuilder sb = new StringBuilder();
-                    Log.e("YP",sb.toString());
                     String line = null;
                     while ((line = reader.readLine()) != null)
                     {
-                        Log.e("YP",line);
                         sb.append(line + "\n");
                     }
                     result = sb.toString();
@@ -170,7 +159,6 @@ public class Acceuil extends AppCompatActivity
                 finally {
                     try{if(inputStream != null)inputStream.close();}catch(Exception squish){}
                 }
-                Log.e("yo",result);
                 return result;
             }
 
@@ -188,21 +176,21 @@ public class Acceuil extends AppCompatActivity
                         String media  = c.getString(TAG_CONTENUMEDIA);
                         int idPubli = Integer.parseInt(id);
                         int idmediaPubli = Integer.parseInt(idmedia);
-                        DateFormat format = new SimpleDateFormat("MMM dd, yyyy", Locale.FRANCE);
-                        Date datePubli = format.parse(date);
-                        Publication publi = new Publication( media, texte, datePubli,  idPubli,  idmediaPubli);
+                        boolean visibility = c.getBoolean(TAG_VISIBILITY);
+                        //DateFormat format = new SimpleDateFormat("MMM dd, yyyy", Locale.FRANCE);
+                        //Date datePubli = format.parse(date);
+                        Date datePubli = new Date();
+                        Log.e("IdPublication_Acceuil",id);
+                        Publication publi = new Publication( media, texte, datePubli,  idPubli,  idmediaPubli, visibility);
 
                         publications.add(publi);
                     }
-
                     adapter = new FileArrayAdapter(
-                            Acceuil.this, R.layout.list_item, publications, idStatut);
+                            Acceuil.this, R.layout.list_item, publications, 1);
                     adapter.setNotifyOnChange(true);
 
                     list.setAdapter(adapter);
                 } catch (JSONException e) {
-                    e.printStackTrace();
-                } catch (ParseException e) {
                     e.printStackTrace();
                 }
             }
@@ -224,17 +212,14 @@ public class Acceuil extends AppCompatActivity
                 String result = null;
                 try {
                     HttpResponse response = httpclient.execute(httpget);
-                    Log.e("ae",response.getStatusLine().toString());
                     HttpEntity entity = response.getEntity();
                     inputStream = entity.getContent();
                     // json is UTF-8 by default
                     BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"), 8);
                     StringBuilder sb = new StringBuilder();
-                    Log.e("YP",sb.toString());
                     String line = null;
                     while ((line = reader.readLine()) != null)
                     {
-                        Log.e("YP",line);
                         sb.append(line + "\n");
                     }
                     result = sb.toString();
@@ -243,7 +228,6 @@ public class Acceuil extends AppCompatActivity
                 finally {
                     try{if(inputStream != null)inputStream.close();}catch(Exception squish){}
                 }
-                Log.e("yo",result);
                 return result;
             }
 
@@ -259,14 +243,11 @@ public class Acceuil extends AppCompatActivity
                     String media  = c.getString(TAG_CONTENUMEDIA);
                     int idPubli = Integer.parseInt(id);
                     int idmediaPubli = Integer.parseInt(idmedia);
-                    DateFormat format = new SimpleDateFormat("MMM dd, yyyy", Locale.FRANCE);
-                    Date datePubli = format.parse(date);
-                    Log.e("Yop",texte);
+                   // DateFormat format = new SimpleDateFormat("MMM dd, yyyy", Locale.FRANCE);
+                   // Date datePubli = format.parse(date);
                     ancre = texte;
 
-                } catch (ParseException e1) {
-                    e1.printStackTrace();
-                } catch (JSONException e1) {
+                }  catch (JSONException e1) {
                     e1.printStackTrace();
                 }
 

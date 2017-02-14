@@ -21,8 +21,14 @@
             android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
             android:name=".Activity.Actu"
-            android:label="@string/menu_actu"></activity>
+            android:label="@string/menu_actu">
+
+
+
+        </activity>
+
         <activity android:name=".Activity.pageConnection">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -11,15 +11,18 @@ public class Publication implements Comparable<Publication>{
     private String media;
     private String texte;
     private Date date;
-    private int id;
+    private int idPublication;
     private int idMedia;
+    private boolean visibility;
 
-    public Publication(String media, String texte, Date date, int id, int idMedia){
+    public Publication(String media, String texte, Date date, int idPublication, int idMedia, boolean visibility){
         this.media = media;
         this.texte = texte;
         this.date = date;
-        this.id = id;
+        this.idPublication = idPublication;
         this.idMedia = idMedia;
+        this.visibility=visibility;
+        this.idPublication = idPublication;
     }
 
     public String getMedia() {
@@ -31,11 +34,18 @@ public class Publication implements Comparable<Publication>{
     public Date getDate() {
         return date;
     }
-    public int getId() {
-        return id;
+    public int getIdPublication() {
+        return idPublication;
     }
     public int getIdMedia() {
         return idMedia;
+    }
+    public boolean isVisibility() {
+        return visibility;
+    }
+
+    public void setVisibility(boolean visibility) {
+        this.visibility = visibility;
     }
 
     @Override

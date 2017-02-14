@@ -38,6 +38,7 @@ import java.util.List;
 import java.util.Locale;
 
 import static android.R.id.list;
+import static com.example.thomas.projet100h.Activity.pageConnection.user;
 
 public class Actu extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -51,8 +52,9 @@ public class Actu extends AppCompatActivity implements NavigationView.OnNavigati
     private static final String TAG_DATE = "datePublication";
     private static final String TAG_ID ="IdPublication";
     private static final String TAG_IDMEDIA ="idMedia";
+    private static final String TAG_VISIBILITY ="validation";
     private static final String TAG_CONTENUMEDIA ="contenuMedia";
-    private static final String TAG_URL_LIST ="http://192.168.43.96:8080/heisenbears/list/";
+    private static final String TAG_URL_LIST ="http://lowcost-env.pq8h39sfav.us-west-2.elasticbeanstalk.com/list/";
 
 
     @Override
@@ -71,11 +73,9 @@ public class Actu extends AppCompatActivity implements NavigationView.OnNavigati
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        idFacebook = getIntent().getStringExtra("id");
-        idStatut = getIntent().getIntExtra("idStatut",1);
 
-        Log.e("idFacebook",idFacebook);
-        Log.e("idStatut",idStatut+"");
+
+
         list = (ListView) findViewById(R.id.listViewActu);
         publications = new ArrayList<>();
 
@@ -139,7 +139,8 @@ public class Actu extends AppCompatActivity implements NavigationView.OnNavigati
             @Override
             protected String doInBackground(String... params) {
                 DefaultHttpClient httpclient = new DefaultHttpClient(new BasicHttpParams());
-                Log.e("URL",TAG_URL_LIST+idFacebook+"-0");
+                idStatut = user.getIdStatut();
+                Log.e("URL",TAG_URL_LIST+idStatut+"-0");
                 HttpGet httpget = new HttpGet(TAG_URL_LIST+idStatut+"-0");
                 // Depends on your web service
                 httpget.setHeader("Content-type", "application/json");
@@ -147,17 +148,14 @@ public class Actu extends AppCompatActivity implements NavigationView.OnNavigati
                 String result = null;
                 try {
                     HttpResponse response = httpclient.execute(httpget);
-                    Log.e("ae",response.getStatusLine().toString());
                     HttpEntity entity = response.getEntity();
                     inputStream = entity.getContent();
                     // json is UTF-8 by default
                     BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"), 8);
                     StringBuilder sb = new StringBuilder();
-                    Log.e("YP",sb.toString());
                     String line = null;
                     while ((line = reader.readLine()) != null)
                     {
-                        Log.e("YP",line);
                         sb.append(line + "\n");
                     }
                     result = sb.toString();
@@ -178,15 +176,17 @@ public class Actu extends AppCompatActivity implements NavigationView.OnNavigati
                     for(int i=0;i<jsonObj.length();i++){
                         JSONObject c = jsonObj.getJSONObject(i);
                         String  texte = c.getString(TAG_TEXTE);
-                        String  date = c.getString(TAG_DATE);
-                        String id = c.getString(TAG_ID);
+                       // String  date = c.getString(TAG_DATE);
+                        String idPublication = c.getString(TAG_ID);
                         String  idmedia = c.getString(TAG_IDMEDIA) ;
                         String media  = c.getString(TAG_CONTENUMEDIA);
-                        int idPubli = Integer.parseInt(id);
+                        int idPubli = Integer.parseInt(idPublication);
                         int idmediaPubli = Integer.parseInt(idmedia);
-                        DateFormat format = new SimpleDateFormat("MMM dd, yyyy", Locale.FRANCE);
-                        Date datePubli = format.parse(date);
-                        Publication publi = new Publication( media, texte, datePubli,  idPubli,  idmediaPubli);
+                        boolean visibility = c.getBoolean(TAG_VISIBILITY);
+                        //DateFormat format = new SimpleDateFormat("MMM dd, yyyy", Locale.FRANCE);
+                      //  Date datePubli = format.parse(date);
+                        Date datePubli = new Date();
+                        Publication publi = new Publication( media, texte, datePubli,  idPubli,  idmediaPubli, visibility);
 
                         publications.add(publi);
                     }
@@ -197,8 +197,6 @@ public class Actu extends AppCompatActivity implements NavigationView.OnNavigati
 
                     list.setAdapter(adapter);
                 } catch (JSONException e) {
-                    e.printStackTrace();
-                } catch (ParseException e) {
                     e.printStackTrace();
                 }
             }

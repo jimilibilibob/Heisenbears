@@ -16,4 +16,7 @@
     <string name="connexion">Log in with Facebook</string>
     <string name="Skip">Skip this</string>
     <string name="Connection">Connexion...</string>
+    <string name="visibility" >Change visibility (visible)</string>
+    <string name="invisibility" >Change visibility (invisible)</string>
+    <string name="delete">delete</string>
 </resources>

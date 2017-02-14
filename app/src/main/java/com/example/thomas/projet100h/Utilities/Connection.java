@@ -6,6 +6,7 @@ import android.util.Log;
 
 import com.example.thomas.projet100h.Activity.Acceuil;
 import com.example.thomas.projet100h.Activity.pageConnection;
+import com.example.thomas.projet100h.entities.Utilisateur;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -18,14 +19,14 @@ import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
+import static com.example.thomas.projet100h.Activity.pageConnection.user;
 
 
 public class Connection extends AsyncTask<String, Void, String> {
 
-    private static final String TAG_URL_USER ="http://192.168.43.96:8080/heisenbears/user/";
+    private static final String TAG_URL_USER ="http://lowcost-env.pq8h39sfav.us-west-2.elasticbeanstalk.com/user/";
     private String URL;
     private String id;
-    private int idStatut;
     public Connection(String id){
         this.id = id;
         this.URL = this.TAG_URL_USER + id;
@@ -83,7 +84,13 @@ public class Connection extends AsyncTask<String, Void, String> {
             JSONObject jsonObj = new JSONObject(result);
             String  nom = jsonObj.getString("nom");
             String  prenom = jsonObj.getString("prenom");
-            idStatut = jsonObj.getInt("idStatut");
+            int idStatut = jsonObj.getInt("idStatut");
+            user.setIdFacebook(id);
+            user.setIdStatut(idStatut);
+            user.setNom(nom);
+            user.setPrenom(prenom);
+
+            Log.e("idF",id);
             Log.e("nom", nom);
             Log.e("prenom", prenom);
             Log.e("idStatut", idStatut+"");
@@ -94,7 +101,5 @@ public class Connection extends AsyncTask<String, Void, String> {
 
     }
 
-    public int getIdStatut() {
-        return idStatut;
-    }
+
 }
