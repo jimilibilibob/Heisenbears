@@ -62,6 +62,7 @@ public class pageConnection extends AppCompatActivity {
             public void onSuccess(LoginResult loginResult) {
                 Log.e("Acces",loginResult.getAccessToken().toString());
                 id = loginResult.getAccessToken().getUserId();
+                Log.e("Permission",loginResult.getAccessToken().getSource().toString());
                 Log.e("idFacebook PC",id);
                 Connection conn = new Connection(id);
                 conn.execute();

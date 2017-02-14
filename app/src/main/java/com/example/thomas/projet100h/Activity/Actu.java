@@ -11,6 +11,8 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ListView;
 
 import com.example.thomas.projet100h.R;
@@ -55,6 +57,9 @@ public class Actu extends AppCompatActivity implements NavigationView.OnNavigati
     private static final String TAG_VISIBILITY ="validation";
     private static final String TAG_CONTENUMEDIA ="contenuMedia";
     private static final String TAG_URL_LIST ="http://lowcost-env.pq8h39sfav.us-west-2.elasticbeanstalk.com/list/";
+    private Button button;
+    private String idLastPublication;
+    private int topPubli;
 
 
     @Override
@@ -73,7 +78,7 @@ public class Actu extends AppCompatActivity implements NavigationView.OnNavigati
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-
+        button = (Button) findViewById(R.id.buttonMore) ;
 
 
         list = (ListView) findViewById(R.id.listViewActu);
@@ -189,13 +194,91 @@ public class Actu extends AppCompatActivity implements NavigationView.OnNavigati
                         Publication publi = new Publication( media, texte, datePubli,  idPubli,  idmediaPubli, visibility);
 
                         publications.add(publi);
+                        idLastPublication = idPublication;
                     }
+
 
                     adapter = new FileArrayAdapter(
                             Actu.this, R.layout.list_item, publications, idStatut);
                     adapter.setNotifyOnChange(true);
 
                     list.setAdapter(adapter);
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        GetDataJSON g = new GetDataJSON();
+        g.execute();
+    }
+
+    public void More(View v){
+        topPubli = publications.size() - 1;
+        class GetDataJSON extends AsyncTask<String, Void, String> {
+
+            @Override
+            protected String doInBackground(String... params) {
+                DefaultHttpClient httpclient = new DefaultHttpClient(new BasicHttpParams());
+                idStatut = user.getIdStatut();
+                Log.e("URL",TAG_URL_LIST+idStatut+idLastPublication);
+                HttpGet httpget = new HttpGet(TAG_URL_LIST+idStatut+"-"+idLastPublication);
+                // Depends on your web service
+                httpget.setHeader("Content-type", "application/json");
+                InputStream inputStream = null;
+                String result = null;
+                try {
+                    HttpResponse response = httpclient.execute(httpget);
+                    HttpEntity entity = response.getEntity();
+                    inputStream = entity.getContent();
+                    // json is UTF-8 by default
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"), 8);
+                    StringBuilder sb = new StringBuilder();
+                    String line = null;
+                    while ((line = reader.readLine()) != null)
+                    {
+                        sb.append(line + "\n");
+                    }
+                    result = sb.toString();
+                } catch (Exception e) {
+                }
+                finally {
+                    try{if(inputStream != null)inputStream.close();}catch(Exception squish){}
+                }
+                Log.e("yo",result);
+                return result;
+            }
+
+            @Override
+            protected void onPostExecute(String result){
+                try {
+
+                    JSONArray jsonObj = new JSONArray(result);
+                    for(int i=0;i<jsonObj.length();i++){
+                        JSONObject c = jsonObj.getJSONObject(i);
+                        String  texte = c.getString(TAG_TEXTE);
+                        // String  date = c.getString(TAG_DATE);
+                        String idPublication = c.getString(TAG_ID);
+                        String  idmedia = c.getString(TAG_IDMEDIA) ;
+                        String media  = c.getString(TAG_CONTENUMEDIA);
+                        int idPubli = Integer.parseInt(idPublication);
+                        int idmediaPubli = Integer.parseInt(idmedia);
+                        boolean visibility = c.getBoolean(TAG_VISIBILITY);
+                        //DateFormat format = new SimpleDateFormat("MMM dd, yyyy", Locale.FRANCE);
+                        //  Date datePubli = format.parse(date);
+                        Date datePubli = new Date();
+                        Publication publi = new Publication( media, texte, datePubli,  idPubli,  idmediaPubli, visibility);
+
+                        publications.add(publi);
+                        idLastPublication = idPublication;
+                    }
+
+                    adapter.setNotifyOnChange(true);
+
+
+                    list.setAdapter(adapter);
+
+                    list.setSelection(topPubli);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
