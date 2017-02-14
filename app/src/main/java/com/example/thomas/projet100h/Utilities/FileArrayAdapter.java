@@ -58,7 +58,6 @@ public class FileArrayAdapter extends ArrayAdapter<Publication> {
     private static String URL_VISIBILITY ;
     private static String URL_DELETE ;
     private boolean visibility;
-    private ListView list;
 
     public FileArrayAdapter(Context context, int textViewResourceId,
                             List<Publication> objects, int idStatut) {
@@ -67,7 +66,6 @@ public class FileArrayAdapter extends ArrayAdapter<Publication> {
         id = textViewResourceId;
         items = objects;
         this.idStatut = idStatut;
-        this.list = list;
     }
 
     public Publication getItem(int i)
@@ -258,12 +256,10 @@ public class FileArrayAdapter extends ArrayAdapter<Publication> {
             }
 
         }
+        
 
         return v;
     }
-
-
-
 
 
 

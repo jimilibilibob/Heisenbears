@@ -109,7 +109,6 @@ public class Acceuil extends AppCompatActivity
         } else if (id  == R.id.nav_actu) {
             intent = new Intent(this, Actu.class);
             startActivity(intent);
-            finish();
         } else if (id == R.id.nav_jeu) {
 
         } else if (id == R.id.nav_equipe) {
@@ -123,7 +122,6 @@ public class Acceuil extends AppCompatActivity
         }else if (id == R.id.nav_logout) {
             intent = new Intent(this, pageConnection.class);
             startActivity(intent);
-            finish();
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

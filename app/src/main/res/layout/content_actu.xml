@@ -8,12 +8,16 @@
         android:id="@+id/listViewActu"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_weight="1"
         android:layout_marginTop="60dp"/>
 
     <Button
         android:text="More"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/button3" />
+        android:id="@+id/buttonMore"
+        android:textAlignment="center"
+        android:onClick="More"
+        />
 
 </LinearLayout>

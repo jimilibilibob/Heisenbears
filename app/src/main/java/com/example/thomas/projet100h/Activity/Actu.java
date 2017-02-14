@@ -113,7 +113,6 @@ public class Actu extends AppCompatActivity implements NavigationView.OnNavigati
         if (id == R.id.nav_acceuil) {
             intentActu = new Intent(this, Acceuil.class);
             startActivity(intentActu);
-            finish();
         } else if (id == R.id.nav_actu) {
 
         } else if (id == R.id.nav_jeu) {
@@ -129,7 +128,6 @@ public class Actu extends AppCompatActivity implements NavigationView.OnNavigati
         }else if (id == R.id.nav_logout) {
             intentActu = new Intent(this, pageConnection.class);
             startActivity(intentActu);
-            finish();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
