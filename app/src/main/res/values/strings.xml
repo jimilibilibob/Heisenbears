@@ -15,8 +15,15 @@
     <string name="menu_deco">Log out</string>
     <string name="connexion">Log in with Facebook</string>
     <string name="Skip">Skip this</string>
-    <string name="Connection">Connexion...</string>
+    <string name="Connection">Connexion</string>
     <string name="visibility">Change visibility (visible)</string>
     <string name="invisibility">Change visibility (invisible)</string>
-    <string name="delete">delete</string>
+    <string name="share">Proposer contenu</string>
+    <string name="profil">Voir et gerer les profils</string>
+    <string name="information">Modifier/ajouter information</string>
+    <string name="playbook">Voir playbook</string>
+    <string name="notification">Envoyer notification</string>
+    <string name="group">Groupe Facebook</string>
+    <string name="page">Page Facebook</string>
+
 </resources>

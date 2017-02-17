@@ -16,11 +16,15 @@ import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
 import com.facebook.Profile;
 import com.facebook.ProfileTracker;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
+
+import org.json.JSONObject;
 
 
 public class pageConnection extends AppCompatActivity {
@@ -49,23 +53,27 @@ public class pageConnection extends AppCompatActivity {
 
 
 
-        Log.e("LB",loginManager.getDefaultAudience().toString());
-        Log.e("LB",loginManager.toString());
-        Log.e("LB",loginManager.getLoginBehavior().toString());
+
         loginManager.logOut();
 
-        loginButton.getDefaultAudience().toString();
         loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
 
 
             @Override
             public void onSuccess(LoginResult loginResult) {
-                Log.e("Acces",loginResult.getAccessToken().toString());
+                Log.e("Acces",loginResult.getAccessToken().getToken().toString());
                 id = loginResult.getAccessToken().getUserId();
-                Log.e("Permission",loginResult.getAccessToken().getSource().toString());
-                Log.e("idFacebook PC",id);
-                Connection conn = new Connection(id);
+
+
+                Connection conn = new Connection(id, loginResult.getAccessToken());
                 conn.execute();
+
+
+
+
+                Log.e("idFacebook PC",id);
+
+
                 i.putExtra("id",id);
                 startActivity(i);
 

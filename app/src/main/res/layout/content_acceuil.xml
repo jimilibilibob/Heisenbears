@@ -24,7 +24,8 @@
             android:layout_height="wrap_content"
             android:id="@+id/textView2"
             android:layout_marginTop="40dp"
-            android:background="@drawable/custom_border"/>
+            android:background="@drawable/custom_border"
+            android:textColor="@android:color/black" />
 
         <ListView
             android:layout_width="match_parent"
