@@ -37,9 +37,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
 
+import static com.example.thomas.projet100h.R.id.imageView;
 import static com.facebook.FacebookSdk.getApplicationContext;
 
 
@@ -47,6 +49,7 @@ public class FileArrayAdapter extends ArrayAdapter<Publication> {
 
     private static final String TAG_VISIBILITY = "http://lowcost-env.pq8h39sfav.us-west-2.elasticbeanstalk.com/visibility/";
     private static final String TAG_DELETE = "http://lowcost-env.pq8h39sfav.us-west-2.elasticbeanstalk.com/delete/";
+    private static String TAG_IMAGE = "http://s3-us-west-2.amazonaws.com/elasticbeanstalk-us-west-2-401731657040/image/";
     private Context c;
     private int id;
     private List<Publication> items;
@@ -58,6 +61,7 @@ public class FileArrayAdapter extends ArrayAdapter<Publication> {
     private static String URL_VISIBILITY ;
     private static String URL_DELETE ;
     private boolean visibility;
+    private static URL URL_IMAGE ;
 
     public FileArrayAdapter(Context context, int textViewResourceId,
                             List<Publication> objects, int idStatut) {
@@ -212,8 +216,8 @@ public class FileArrayAdapter extends ArrayAdapter<Publication> {
                 image.setVisibility(View.VISIBLE);
                 if (!texte.equals("null") && !media.equals("null")) {
                     texteV.setText(texte);
-
-
+                    Image(media);
+                    Log.e("56","entrer");
                 }
                 if (!texte.equals("null") && media.equals("null")) {
                     image.setVisibility(View.GONE);
@@ -263,33 +267,41 @@ public class FileArrayAdapter extends ArrayAdapter<Publication> {
 
 
 
-    public static Bitmap getBitmapFromURL(String URL) {
-        class GetDataJSON extends AsyncTask<String, Void, String> {
+    private void Image(String name){
+        final Bitmap[] bmp = new Bitmap[1];
+        final String imageName = name;
+        class GetDataJSON extends AsyncTask<Void, Void, Bitmap> {
 
             @Override
-            protected String doInBackground(String... params) {
-                try {
-                    URL url = new URL("http://192.168.1.16/projet100h/img/logoAppli.jpg");
-                    HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-                    connection.setDoInput(true);
-                    connection.connect();
-                    InputStream input = connection.getInputStream();
-                    Bitmap myBitmap = BitmapFactory.decodeStream(input);
-                    bmp = myBitmap;
-                } catch (IOException e) {
-                    // Log exception
-                    return null;
-                }
-                return null;
+            protected Bitmap doInBackground(Void... params) {
 
+
+                try {
+                    URL_IMAGE = new URL(TAG_IMAGE+imageName);
+                    bmp[0] = BitmapFactory.decodeStream(URL_IMAGE.openConnection().getInputStream());
+                    Log.e("1",URL_IMAGE.toString());
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                return bmp[0];
+            }
+
+            @Override
+            protected void onPostExecute(Bitmap bmp){
+
+                image.setImageBitmap(bmp);
             }
 
 
+
         }
-        return bmp;
+        GetDataJSON g = new GetDataJSON();
+        g.execute();
     }
 
-    public static void changeVisibility(){
+    private static void changeVisibility(){
         class Visibility extends AsyncTask<String, Void, String> {
 
 
@@ -330,7 +342,7 @@ public class FileArrayAdapter extends ArrayAdapter<Publication> {
         v.execute();
     }
 
-    public static void changeDelete(){
+    private static void changeDelete(){
         class Delete extends AsyncTask<String, Void, String> {
 
 
