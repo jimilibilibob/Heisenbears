@@ -8,6 +8,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Movie;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
+import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -53,11 +54,11 @@ public class FileArrayAdapter extends ArrayAdapter<Publication> {
     private Context c;
     private int id;
     private List<Publication> items;
-    ImageView image;
+    private ImageView image;
     private static Bitmap bmp;
-    int idStatut;
-    PopupMenu popup ;
-    String visibilit;
+    private int idStatut;
+    private PopupMenu popup ;
+    private String visibilit;
     private static String URL_VISIBILITY ;
     private static String URL_DELETE ;
     private boolean visibility;
@@ -77,6 +78,7 @@ public class FileArrayAdapter extends ArrayAdapter<Publication> {
         return items.get(i);
     }
 
+    @NonNull
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View v = convertView;
@@ -97,7 +99,6 @@ public class FileArrayAdapter extends ArrayAdapter<Publication> {
         VideoView video = (VideoView) v.findViewById(R.id.video);
         video.setVisibility(View.GONE);
 
-        View layout =  v.findViewById(R.id.layout);
         Button btn = (Button) v.findViewById(R.id.button2);
         btn.setVisibility(View.GONE);
 
@@ -278,20 +279,29 @@ public class FileArrayAdapter extends ArrayAdapter<Publication> {
 
                 try {
                     URL_IMAGE = new URL(TAG_IMAGE+imageName);
-                    bmp[0] = BitmapFactory.decodeStream(URL_IMAGE.openConnection().getInputStream());
+                    HttpURLConnection connection = (HttpURLConnection)URL_IMAGE.openConnection();
+                    connection.setDoInput(true);
+                    connection.connect();
+                    InputStream input = connection.getInputStream();
+                    bmp[0] = BitmapFactory.decodeStream(input);
+
                     Log.e("1",URL_IMAGE.toString());
                 } catch (MalformedURLException e) {
                     e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
+                } catch (IOException e1) {
+                    e1.printStackTrace();
                 }
                 return bmp[0];
             }
 
             @Override
             protected void onPostExecute(Bitmap bmp){
+                if (isCancelled()) {
+                    bmp = null;
+                }
 
                 image.setImageBitmap(bmp);
+
             }
 
 

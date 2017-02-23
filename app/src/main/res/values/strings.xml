@@ -18,12 +18,18 @@
     <string name="Connection">Connexion</string>
     <string name="visibility">Change visibility (visible)</string>
     <string name="invisibility">Change visibility (invisible)</string>
-    <string name="share">Proposer contenu</string>
-    <string name="profil">Voir et gerer les profils</string>
-    <string name="information">Modifier/ajouter information</string>
-    <string name="playbook">Voir playbook</string>
-    <string name="notification">Envoyer notification</string>
-    <string name="group">Groupe Facebook</string>
-    <string name="page">Page Facebook</string>
-
+    <string name="share">Share</string>
+    <string name="profil">See and manage profil</string>
+    <string name="information">Modify/add information</string>
+    <string name="playbook">Playbook</string>
+    <string name="notification">Send notification</string>
+    <string name="group">Facebook group</string>
+    <string name="page">Facebook page</string>
+    <string name="delete">delete</string>
+    <string name="salutation">Hey</string>
+    <string name="signalement1">If you are a player, </string>
+    <string name="signalement2">Clic here !</string>
+    <string name="signalement3">You are \"signler\", wait ...</string>
+    <string name="CoFacebook">You need to be connect with Facebook to do it !</string>
+    <string name="signalementMessage">Done !</string>
 </resources>

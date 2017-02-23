@@ -2,29 +2,61 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:layout_marginTop="70dp">
 
     <TextView
-        android:text=" "
+        android:text="@string/salutation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/textView5"
         android:textAlignment="center"
         android:layout_marginBottom="20dp"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="80dp"
         android:textSize="30sp" />
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/signalement"
+        >
+
+        <TextView
+            android:text="@string/signalement1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/signalement1"
+            android:textAlignment="center"/>
+
+        <TextView
+            android:text="@string/signalement2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/signalement2"
+            android:textAlignment="center"
+            android:onClick="signalement2"/>
+
+        <TextView
+            android:text="@string/signalement3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/signalement3"
+            android:textAlignment="center"/>
+    </LinearLayout>
 
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="8dp"
         android:layout_marginLeft="50dp"
         android:layout_marginRight="50dp"
-        android:layout_marginStart="120dp">
+        android:layout_marginStart="120dp"
+        android:id="@+id/share"
+        android:onClick="share">
 
         <ImageView
             android:layout_width="40dp"
@@ -43,19 +75,21 @@
             android:textAlignment="center"
             android:layout_marginTop="8dp"
             android:textSize="18sp"
-            android:layout_marginStart="5dp"  />
+            android:layout_marginStart="5dp"/>
     </LinearLayout>
 
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="8dp"
         android:layout_marginLeft="50dp"
         android:layout_marginRight="50dp"
-        android:layout_marginStart="120dp">
+        android:layout_marginStart="120dp"
+        android:id="@+id/information"
+        android:onClick="information">
 
         <ImageView
             android:layout_width="40dp"
@@ -74,19 +108,21 @@
             android:textAlignment="center"
             android:layout_marginTop="8dp"
             android:textSize="18sp"
-            android:layout_marginStart="5dp" />
+            android:layout_marginStart="5dp"/>
     </LinearLayout>
 
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="8dp"
         android:layout_marginLeft="50dp"
         android:layout_marginRight="50dp"
-        android:layout_marginStart="120dp">
+        android:layout_marginStart="120dp"
+        android:id="@+id/playbook"
+        android:onClick="playbook">
 
         <ImageView
             android:layout_width="40dp"
@@ -105,19 +141,22 @@
             android:textAlignment="center"
             android:layout_marginTop="8dp"
             android:textSize="18sp"
-            android:layout_marginStart="5dp"  />
+            android:layout_marginStart="5dp"/>
     </LinearLayout>
 
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="8dp"
         android:layout_marginLeft="50dp"
         android:layout_marginRight="50dp"
-        android:layout_marginStart="120dp">
+        android:layout_marginStart="120dp"
+        android:id="@+id/groupFb"
+        android:textAlignment="center"
+        android:onClick="grouFb">
 
         <ImageView
             android:layout_width="40dp"
@@ -136,26 +175,28 @@
             android:textAlignment="center"
             android:layout_marginTop="8dp"
             android:textSize="18sp"
-            android:layout_marginStart="5dp"  />
+            android:layout_marginStart="5dp"/>
     </LinearLayout>
 
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="8dp"
         android:layout_marginLeft="50dp"
         android:layout_marginRight="50dp"
-        android:layout_marginStart="120dp">
+        android:layout_marginStart="120dp"
+        android:id="@+id/pageFb"
+        android:onClick="pageFb">
 
         <ImageView
             android:layout_width="40dp"
             android:layout_height="40dp"
             app:srcCompat="@drawable/com_facebook_favicon_blue"
             android:id="@+id/imageView"
-
+            android:layout_weight="1"
             android:contentDescription="@string/page"/>
 
         <TextView
@@ -167,7 +208,7 @@
             android:textAlignment="center"
             android:layout_marginTop="8dp"
             android:textSize="18sp"
-            android:layout_marginStart="5dp" />
+            android:layout_marginStart="5dp"/>
 
     </LinearLayout>
 
@@ -175,12 +216,14 @@
         android:orientation="horizontal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="8dp"
         android:layout_marginLeft="50dp"
         android:layout_marginRight="50dp"
-        android:layout_marginStart="120dp">
+        android:layout_marginStart="120dp"
+        android:id="@+id/notification"
+        android:onClick="notification">
 
         <ImageView
             android:layout_width="40dp"
@@ -199,24 +242,26 @@
             android:textAlignment="center"
             android:layout_marginTop="8dp"
             android:textSize="18sp"
-            android:layout_marginStart="5dp"  />
+            android:layout_marginStart="5dp"/>
     </LinearLayout>
 
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="8dp"
         android:layout_marginLeft="50dp"
         android:layout_marginRight="50dp"
-        android:layout_marginStart="120dp">
+        android:layout_marginStart="120dp"
+        android:id="@+id/profil_gestion"
+        android:onClick="gestion_profil">
 
         <ImageView
             android:layout_width="40dp"
             android:layout_height="40dp"
-            app:srcCompat="@drawable/ic_menu_share"
+            app:srcCompat="@drawable/ic_person_black_24dp"
             android:id="@+id/imageView2"
             android:layout_weight="1"
             android:contentDescription="@string/profil"/>
@@ -230,6 +275,6 @@
             android:textAlignment="center"
             android:layout_marginTop="8dp"
             android:textSize="18sp"
-            android:layout_marginStart="5dp"  />
+            android:layout_marginStart="5dp"/>
     </LinearLayout>
 </LinearLayout>

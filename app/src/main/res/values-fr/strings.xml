@@ -15,4 +15,17 @@
     <string name="delete">suprimer</string>
     <string name="visibility" translatable="false">Changer la visibilité (visible)</string>
     <string name="invisibility">Changer la visibilité (invisible)</string>
+    <string name="group">Groupe Facebook</string>
+    <string name="information">Modifier/ajouter information</string>
+    <string name="notification">Envoyer notification</string>
+    <string name="page">Page Facebook</string>
+    <string name="playbook">Playbook</string>
+    <string name="share">Proposer contenu</string>
+    <string name="profil">Voir et gerer les profils</string>
+    <string name="signalement3">Tu t\'es déja signalé, attend ...</string>
+    <string name="signalement1">Si tu es un joueur,</string>
+    <string name="signalement2">Clic ici !</string>
+    <string name="salutation">Salut</string>
+    <string name="CoFacebook">Vous devez être connecté avec Facebook pour faire cela !</string>
+    <string name="signalementMessage">Fait !</string>
 </resources>

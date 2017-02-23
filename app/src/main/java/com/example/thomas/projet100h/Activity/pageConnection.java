@@ -33,7 +33,7 @@ public class pageConnection extends AppCompatActivity {
     private Intent i;
     private LoginButton loginButton;
     private String id;
-    public static final Utilisateur user = new Utilisateur("",1,"","");
+    public static final Utilisateur user = new Utilisateur("null",1,null,null);
     private LoginManager loginManager;
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
