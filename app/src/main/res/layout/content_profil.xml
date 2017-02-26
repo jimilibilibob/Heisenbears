@@ -64,7 +64,8 @@
             app:srcCompat="@drawable/ic_menu_share"
             android:id="@+id/imageView7"
             android:layout_weight="1"
-            android:contentDescription="@string/share"/>
+            android:contentDescription="@string/share"
+            android:onClick="share"/>
 
         <TextView
             android:text="@string/share"
@@ -75,7 +76,8 @@
             android:textAlignment="center"
             android:layout_marginTop="8dp"
             android:textSize="18sp"
-            android:layout_marginStart="5dp"/>
+            android:layout_marginStart="5dp"
+            android:onClick="share"/>
     </LinearLayout>
 
     <LinearLayout
