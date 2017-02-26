@@ -40,6 +40,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.example.thomas.projet100h.R.id.imageView;
@@ -63,6 +64,7 @@ public class FileArrayAdapter extends ArrayAdapter<Publication> {
     private static String URL_DELETE ;
     private boolean visibility;
     private static URL URL_IMAGE ;
+    private List<List<String>> IMGs = new ArrayList();
 
     public FileArrayAdapter(Context context, int textViewResourceId,
                             List<Publication> objects, int idStatut) {
@@ -81,6 +83,7 @@ public class FileArrayAdapter extends ArrayAdapter<Publication> {
     @NonNull
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+        Log.e("items",items.size()+"");
         View v = convertView;
         if (v == null) {
             LayoutInflater vi = (LayoutInflater)c.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -182,7 +185,7 @@ public class FileArrayAdapter extends ArrayAdapter<Publication> {
 
 
         if (o != null) {
-
+            Log.e("++++++++++++",o.getIdMedia()+"     "+position);
 
 
 
@@ -190,6 +193,7 @@ public class FileArrayAdapter extends ArrayAdapter<Publication> {
             String media = o.getMedia();
 
             if (o.getIdMedia() == 1) {
+                Log.e("++++++++++++","--------------------------");
                 image.setVisibility(View.GONE);
                 video.setVisibility(View.GONE);
                 titre.setVisibility(View.VISIBLE);
@@ -211,14 +215,19 @@ public class FileArrayAdapter extends ArrayAdapter<Publication> {
                 }
 
             }
+
             if (o.getIdMedia() == 2) {
                 titre.setVisibility(View.GONE);
                 video.setVisibility(View.GONE);
                 image.setVisibility(View.VISIBLE);
                 if (!texte.equals("null") && !media.equals("null")) {
                     texteV.setText(texte);
+                    ArrayList<String> imgInfo = new ArrayList();
+                    imgInfo.add(position+"");
+                    imgInfo.add(media);
+                    IMGs.add(imgInfo);
+                    Log.e("57",IMGs.toString());
                     Image(media);
-                    Log.e("56","entrer");
                 }
                 if (!texte.equals("null") && media.equals("null")) {
                     image.setVisibility(View.GONE);
@@ -236,6 +245,7 @@ public class FileArrayAdapter extends ArrayAdapter<Publication> {
 
             }
             if (o.getIdMedia() == 3) {
+                Log.e("++++++++++++","--------------------------");
                 image.setVisibility(View.GONE);
                 titre.setVisibility(View.GONE);
                 video.setVisibility(View.VISIBLE);
@@ -296,9 +306,7 @@ public class FileArrayAdapter extends ArrayAdapter<Publication> {
 
             @Override
             protected void onPostExecute(Bitmap bmp){
-                if (isCancelled()) {
-                    bmp = null;
-                }
+
 
                 image.setImageBitmap(bmp);
 

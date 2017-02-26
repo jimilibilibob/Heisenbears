@@ -75,6 +75,7 @@ public class Acceuil extends AppCompatActivity
         toggle.syncState();
 
 
+
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
@@ -184,10 +185,7 @@ public class Acceuil extends AppCompatActivity
 
                         publications.add(publi);
                     }
-                    adapter = new FileArrayAdapter(
-                            Acceuil.this, R.layout.list_item, publications, 1);
-                    adapter.setNotifyOnChange(true);
-
+                    adapter = new FileArrayAdapter( Acceuil.this, R.layout.list_item, publications, 1);
                     list.setAdapter(adapter);
                 } catch (JSONException e) {
                     e.printStackTrace();

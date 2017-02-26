@@ -49,6 +49,7 @@ public class profil extends AppCompatActivity  implements NavigationView.OnNavig
     private String idFacebook;
     private String messageNonCo;
     private String messageSignalement;
+    private Intent intent;
 
 
     @Override
@@ -242,6 +243,8 @@ public class profil extends AppCompatActivity  implements NavigationView.OnNavig
 
     public void share(View V){
         Log.e("2","2");
+        intent = new Intent(this, Partage.class);
+        startActivity(intent);
     }
 
     public void information(View V){
@@ -261,6 +264,7 @@ public class profil extends AppCompatActivity  implements NavigationView.OnNavig
     }
 
     public void gestion_profil(View V){
+
         Log.e("7","7");
     }
 

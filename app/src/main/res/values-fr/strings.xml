@@ -13,7 +13,7 @@
     <string name="Skip">Passer cette étape</string>
     <string name="Connection">Connexion</string>
     <string name="delete">suprimer</string>
-    <string name="visibility" translatable="false">Changer la visibilité (visible)</string>
+    <string name="visibility">Changer la visibilité (visible)</string>
     <string name="invisibility">Changer la visibilité (invisible)</string>
     <string name="group">Groupe Facebook</string>
     <string name="information">Modifier/ajouter information</string>
