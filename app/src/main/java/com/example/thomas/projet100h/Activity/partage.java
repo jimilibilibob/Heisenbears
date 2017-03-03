@@ -279,7 +279,7 @@ public class partage extends AppCompatActivity  implements NavigationView.OnNavi
                 String result = null;
                 InputStream inputStream = null;
                 HttpClient httpclient = new DefaultHttpClient();
-                HttpPost httppost = new HttpPost("http://192.168.1.16:8080/heisenbears/publi/add");
+                HttpPost httppost = new HttpPost("http://192.168.43.96:8080/heisenbears/publi/add");
                 try {
 
                     List<NameValuePair> nameValuePairs = new ArrayList<>(2);

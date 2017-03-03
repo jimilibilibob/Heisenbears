@@ -83,12 +83,12 @@ public class pageConnection extends AppCompatActivity {
             }
 
             @Override
-            public void onCancel() {   Log.e("Yo","cancel");
+            public void onCancel() {   Log.e("cancel","cancel");
             }
 
             @Override
             public void onError(FacebookException exception) {
-                Log.e("Yo","error");
+                Log.e("error","error");
             }
         });
 

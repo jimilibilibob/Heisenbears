@@ -44,7 +44,7 @@ import static com.example.thomas.projet100h.Activity.pageConnection.user;
 
 public class Actu extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-    private Intent intentActu;
+    private Intent intent;
     private FileArrayAdapter adapter;
     private String idFacebook;
     private int idStatut;
@@ -111,8 +111,8 @@ public class Actu extends AppCompatActivity implements NavigationView.OnNavigati
         int id = item.getItemId();
 
         if (id == R.id.nav_acceuil) {
-            intentActu = new Intent(this, Acceuil.class);
-            startActivity(intentActu);
+            intent = new Intent(this, Acceuil.class);
+            startActivity(intent);
         } else if (id == R.id.nav_actu) {
 
         } else if (id == R.id.nav_jeu) {
@@ -122,12 +122,13 @@ public class Actu extends AppCompatActivity implements NavigationView.OnNavigati
         } else if (id == R.id.nav_resCal) {
 
         } else if (id == R.id.nav_profil) {
-
+            intent = new Intent(this, profil.class);
+            startActivity(intent);
         }else if (id == R.id.nav_propos) {
 
         }else if (id == R.id.nav_logout) {
-            intentActu = new Intent(this, pageConnection.class);
-            startActivity(intentActu);
+            intent = new Intent(this, pageConnection.class);
+            startActivity(intent);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

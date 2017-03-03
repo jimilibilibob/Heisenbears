@@ -164,8 +164,11 @@ public class profil extends AppCompatActivity  implements NavigationView.OnNavig
         int id = item.getItemId();
 
         if (id == R.id.nav_acceuil) {
+            intent = new Intent(this, Acceuil.class);
+            startActivity(intent);
         } else if (id  == R.id.nav_actu) {
-
+            intent = new Intent(this, Actu.class);
+            startActivity(intent);
         } else if (id == R.id.nav_jeu) {
 
         } else if (id == R.id.nav_equipe) {
@@ -177,7 +180,8 @@ public class profil extends AppCompatActivity  implements NavigationView.OnNavig
         }else if (id == R.id.nav_propos) {
 
         }else if (id == R.id.nav_logout) {
-
+            intent = new Intent(this, pageConnection.class);
+            startActivity(intent);
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
@@ -197,7 +201,6 @@ public class profil extends AppCompatActivity  implements NavigationView.OnNavig
                     URL_CHANGE_ID = TAG_CHANGE_ID+idFacebook+"-5" ;
                     Log.e("URL_VIS",URL_CHANGE_ID);
                     HttpGet httpget = new HttpGet(URL_CHANGE_ID);
-                    // Depends on your web service
                     httpget.setHeader("Content-type", "application/json");
                     InputStream inputStream = null;
                     String result = null;
@@ -205,10 +208,9 @@ public class profil extends AppCompatActivity  implements NavigationView.OnNavig
                         HttpResponse response = httpclient.execute(httpget);
                         HttpEntity entity = response.getEntity();
                         inputStream = entity.getContent();
-                        // json is UTF-8 by default
                         BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"), 8);
                         StringBuilder sb = new StringBuilder();
-                        String line = null;
+                        String line;
                         while ((line = reader.readLine()) != null)
                         {
                             sb.append(line + "\n");
@@ -242,34 +244,34 @@ public class profil extends AppCompatActivity  implements NavigationView.OnNavig
     }
 
     public void share(View V){
-        Log.e("2","2");
+        Log.e("2","share");
         intent = new Intent(this, partage.class);
         startActivity(intent);
     }
 
     public void information(View V){
-        Log.e("3","3");
+        Log.e("3","information");
     }
 
     public void playbook(View V){
-        Log.e("4","4");
+        Log.e("4","playbook");
     }
 
     public void pageFb(View V){
-        Log.e("5","5");
+        Log.e("5","pageFb");
     }
 
     public void notification(View V){
-        Log.e("6","6");
+        Log.e("6","notification");
     }
 
     public void gestion_profil(View V){
 
-        Log.e("7","7");
+        Log.e("7","gestion_profil");
     }
 
     public void grouFb(View V){
-        Log.e("8","8");
+        Log.e("8","grouFb");
     }
 
 
