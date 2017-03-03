@@ -32,4 +32,11 @@
     <string name="signalement3">You are \"signler\", wait ...</string>
     <string name="CoFacebook">You need to be connect with Facebook to do it !</string>
     <string name="signalementMessage">Done !</string>
+    <string name="Text">Text</string>
+    <string name="picture">Picture</string>
+    <string name="video">Video</string>
+    <string name="Select">Select</string>
+    <string name="titre">Title</string>
+    <string name="épingler">Pin</string>
+    <string name="priver">Private</string>
 </resources>

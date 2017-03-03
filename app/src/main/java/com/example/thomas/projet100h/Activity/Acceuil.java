@@ -1,6 +1,5 @@
 package com.example.thomas.projet100h.Activity;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.design.widget.NavigationView;
@@ -31,21 +30,15 @@ import org.json.JSONObject;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
-import static com.example.thomas.projet100h.Activity.pageConnection.user;
 
 public class Acceuil extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private Intent intent;
-    private String myJSON;
     private TextView textView;
     private static final String TAG_TEXTE = "texte";
     private static final String TAG_DATE = "datePublication";
@@ -137,7 +130,6 @@ public class Acceuil extends AppCompatActivity
             protected String doInBackground(String... params) {
                 DefaultHttpClient httpclient = new DefaultHttpClient(new BasicHttpParams());
                 HttpGet httpget = new HttpGet(TAG_URL_LIST+"1"+"-0");
-                // Depends on your web service
                 httpget.setHeader("Content-type", "application/json");
                 InputStream inputStream = null;
                 String result = null;
@@ -145,19 +137,23 @@ public class Acceuil extends AppCompatActivity
                     HttpResponse response = httpclient.execute(httpget);
                     HttpEntity entity = response.getEntity();
                     inputStream = entity.getContent();
-                    // json is UTF-8 by default
                     BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"), 8);
                     StringBuilder sb = new StringBuilder();
-                    String line = null;
+                    String line;
                     while ((line = reader.readLine()) != null)
                     {
                         sb.append(line + "\n");
                     }
                     result = sb.toString();
                 } catch (Exception e) {
+                    Log.e("Error"," Error in getDataList");
                 }
                 finally {
-                    try{if(inputStream != null)inputStream.close();}catch(Exception squish){}
+                    try{
+                        if(inputStream != null)inputStream.close();
+                    }catch(Exception squish){
+                        Log.e("Error"," Error in getDataList");
+                    }
                 }
                 return result;
             }
@@ -170,15 +166,12 @@ public class Acceuil extends AppCompatActivity
                     for(int i=0;i<jsonObj.length();i++){
                         JSONObject c = jsonObj.getJSONObject(i);
                         String  texte = c.getString(TAG_TEXTE);
-                        String  date = c.getString(TAG_DATE);
                         String id = c.getString(TAG_ID);
                         String  idmedia = c.getString(TAG_IDMEDIA) ;
                         String media  = c.getString(TAG_CONTENUMEDIA);
                         int idPubli = Integer.parseInt(id);
                         int idmediaPubli = Integer.parseInt(idmedia);
                         boolean visibility = c.getBoolean(TAG_VISIBILITY);
-                        //DateFormat format = new SimpleDateFormat("MMM dd, yyyy", Locale.FRANCE);
-                        //Date datePubli = format.parse(date);
                         Date datePubli = new Date();
                         Log.e("IdPublication_Acceuil",id);
                         Publication publi = new Publication( media, texte, datePubli,  idPubli,  idmediaPubli, visibility);
@@ -203,7 +196,6 @@ public class Acceuil extends AppCompatActivity
             protected String doInBackground(String... params) {
                 DefaultHttpClient httpclient = new DefaultHttpClient(new BasicHttpParams());
                 HttpGet httpget = new HttpGet(TAG_URL_ANCRE);
-                // Depends on your web service
                 httpget.setHeader("Content-type", "application/json");
                 InputStream inputStream = null;
                 String result = null;
@@ -211,19 +203,23 @@ public class Acceuil extends AppCompatActivity
                     HttpResponse response = httpclient.execute(httpget);
                     HttpEntity entity = response.getEntity();
                     inputStream = entity.getContent();
-                    // json is UTF-8 by default
                     BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"), 8);
                     StringBuilder sb = new StringBuilder();
-                    String line = null;
+                    String line;
                     while ((line = reader.readLine()) != null)
                     {
                         sb.append(line + "\n");
                     }
                     result = sb.toString();
                 } catch (Exception e) {
+                    Log.e("Error"," Error in getDataAnre");
                 }
                 finally {
-                    try{if(inputStream != null)inputStream.close();}catch(Exception squish){}
+                    try{
+                        if(inputStream != null)inputStream.close();
+                    }catch(Exception squish){
+                        Log.e("Error"," Error in getDataAnre");
+                    }
                 }
                 return result;
             }
@@ -234,14 +230,11 @@ public class Acceuil extends AppCompatActivity
 
                     JSONObject c = new JSONObject(result);
                     String  texte = c.getString(TAG_TEXTE);
-                    String  date = c.getString(TAG_DATE);
                     String id = c.getString(TAG_ID);
                     String  idmedia = c.getString(TAG_IDMEDIA) ;
                     String media  = c.getString(TAG_CONTENUMEDIA);
-                    int idPubli = Integer.parseInt(id);
+                    //int idPubli = Integer.parseInt(id);
                     int idmediaPubli = Integer.parseInt(idmedia);
-                   // DateFormat format = new SimpleDateFormat("MMM dd, yyyy", Locale.FRANCE);
-                   // Date datePubli = format.parse(date);
                     ancre = texte;
 
                 }  catch (JSONException e1) {

@@ -29,6 +29,7 @@ import com.example.thomas.projet100h.entities.Publication;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
+import org.apache.http.HttpStatus;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.params.BasicHttpParams;
@@ -64,7 +65,6 @@ public class FileArrayAdapter extends ArrayAdapter<Publication> {
     private static String URL_DELETE ;
     private boolean visibility;
     private static URL URL_IMAGE ;
-    private List<List<String>> IMGs = new ArrayList();
 
     public FileArrayAdapter(Context context, int textViewResourceId,
                             List<Publication> objects, int idStatut) {
@@ -83,7 +83,6 @@ public class FileArrayAdapter extends ArrayAdapter<Publication> {
     @NonNull
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        Log.e("items",items.size()+"");
         View v = convertView;
         if (v == null) {
             LayoutInflater vi = (LayoutInflater)c.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -185,15 +184,11 @@ public class FileArrayAdapter extends ArrayAdapter<Publication> {
 
 
         if (o != null) {
-            Log.e("++++++++++++",o.getIdMedia()+"     "+position);
-
-
 
             String texte = o.getTexte();
             String media = o.getMedia();
 
             if (o.getIdMedia() == 1) {
-                Log.e("++++++++++++","--------------------------");
                 image.setVisibility(View.GONE);
                 video.setVisibility(View.GONE);
                 titre.setVisibility(View.VISIBLE);
@@ -222,11 +217,6 @@ public class FileArrayAdapter extends ArrayAdapter<Publication> {
                 image.setVisibility(View.VISIBLE);
                 if (!texte.equals("null") && !media.equals("null")) {
                     texteV.setText(texte);
-                    ArrayList<String> imgInfo = new ArrayList();
-                    imgInfo.add(position+"");
-                    imgInfo.add(media);
-                    IMGs.add(imgInfo);
-                    Log.e("57",IMGs.toString());
                     Image(media);
                 }
                 if (!texte.equals("null") && media.equals("null")) {
@@ -245,7 +235,6 @@ public class FileArrayAdapter extends ArrayAdapter<Publication> {
 
             }
             if (o.getIdMedia() == 3) {
-                Log.e("++++++++++++","--------------------------");
                 image.setVisibility(View.GONE);
                 titre.setVisibility(View.GONE);
                 video.setVisibility(View.VISIBLE);
@@ -286,23 +275,31 @@ public class FileArrayAdapter extends ArrayAdapter<Publication> {
             @Override
             protected Bitmap doInBackground(Void... params) {
 
-
+                HttpURLConnection urlConnection = null;
                 try {
                     URL_IMAGE = new URL(TAG_IMAGE+imageName);
-                    HttpURLConnection connection = (HttpURLConnection)URL_IMAGE.openConnection();
-                    connection.setDoInput(true);
-                    connection.connect();
-                    InputStream input = connection.getInputStream();
-                    bmp[0] = BitmapFactory.decodeStream(input);
+                    urlConnection = (HttpURLConnection) URL_IMAGE.openConnection();
+                    int statusCode = urlConnection.getResponseCode();
+                    if (statusCode != HttpStatus.SC_OK) {
+                        return null;
+                    }
 
-                    Log.e("1",URL_IMAGE.toString());
-                } catch (MalformedURLException e) {
-                    e.printStackTrace();
-                } catch (IOException e1) {
-                    e1.printStackTrace();
+                    InputStream inputStream = urlConnection.getInputStream();
+                    if (inputStream != null) {
+                        Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+                        return bitmap;
+                    }
+                } catch (Exception e) {
+                    urlConnection.disconnect();
+                    Log.w("ImageDownloader", "Error downloading image from " + URL_IMAGE);
+                } finally {
+                    if (urlConnection != null) {
+                        urlConnection.disconnect();
+                    }
                 }
-                return bmp[0];
+                return null;
             }
+
 
             @Override
             protected void onPostExecute(Bitmap bmp){

@@ -20,7 +20,7 @@
     <string name="notification">Envoyer notification</string>
     <string name="page">Page Facebook</string>
     <string name="playbook">Playbook</string>
-    <string name="share">Proposer contenu</string>
+    <string name="share">Partager</string>
     <string name="profil">Voir et gerer les profils</string>
     <string name="signalement3">Tu t\'es déja signalé, attend ...</string>
     <string name="signalement1">Si tu es un joueur,</string>
@@ -28,4 +28,11 @@
     <string name="salutation">Salut</string>
     <string name="CoFacebook">Vous devez être connecté avec Facebook pour faire cela !</string>
     <string name="signalementMessage">Fait !</string>
+    <string name="Text">Texte</string>
+    <string name="picture">Photo</string>
+    <string name="video">Vidéo</string>
+    <string name="Select">Séléctionner</string>
+    <string name="titre">Titre</string>
+    <string name="épingler">Epingler</string>
+    <string name="priver">Priver</string>
 </resources>

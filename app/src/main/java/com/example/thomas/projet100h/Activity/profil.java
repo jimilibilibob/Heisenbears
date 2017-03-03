@@ -243,7 +243,7 @@ public class profil extends AppCompatActivity  implements NavigationView.OnNavig
 
     public void share(View V){
         Log.e("2","2");
-        intent = new Intent(this, Partage.class);
+        intent = new Intent(this, partage.class);
         startActivity(intent);
     }
 

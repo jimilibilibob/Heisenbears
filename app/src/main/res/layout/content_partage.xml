@@ -9,7 +9,7 @@
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_weight="0.85"
         android:background="@drawable/custom_border_ligne"
         android:layout_marginTop="60dp"
@@ -22,7 +22,7 @@
             android:orientation="horizontal">
 
             <RadioButton
-                android:text="Texte"
+                android:text="@string/Text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/radioButtonText"
@@ -31,7 +31,7 @@
                 android:checked="true" />
 
             <RadioButton
-                android:text="Photo"
+                android:text="@string/picture"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/radioButtonImg"
@@ -39,7 +39,7 @@
                 android:onClick="onSelectImg"/>
 
             <RadioButton
-                android:text="Video"
+                android:text="@string/video"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/radioButtonVid"
@@ -73,7 +73,7 @@
                     android:maxHeight="100dp"/>
 
                 <Button
-                    android:text="Select"
+                    android:text="@string/Select"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/Select"
@@ -87,7 +87,7 @@
                 android:inputType="textPersonName"
                 android:ems="10"
                 android:id="@+id/editText2"
-                android:hint="Titre" />
+                android:hint="@string/titre" />
 
             <LinearLayout
                 android:orientation="horizontal"
@@ -100,7 +100,7 @@
                     android:inputType="textMultiLine"
                     android:ems="10"
                     android:id="@+id/editText3"
-                    android:hint="Texte" />
+                    android:hint="@string/Text" />
 
             </LinearLayout>
 
@@ -110,14 +110,14 @@
                 android:layout_height="wrap_content">
 
                 <CheckBox
-                    android:text="Prioritaire"
+                    android:text="@string/épingler"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/checkBox3"
                     android:layout_weight="1" />
 
                 <CheckBox
-                    android:text="priver"
+                    android:text="@string/priver"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/checkBox4"
@@ -131,10 +131,11 @@
     </LinearLayout>
 
     <Button
-        android:text="Button"
+        android:text="@string/share"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/button4"
-        android:layout_weight="0.1" />
+        android:layout_weight="0.1"
+        android:onClick="onClicShare"/>
 
 </LinearLayout>
