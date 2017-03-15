@@ -36,6 +36,7 @@ public class pageConnection extends AppCompatActivity {
     public static final Utilisateur user = new Utilisateur("null",1,null,null);
     private LoginManager loginManager;
 
+    /** onCreate, fonction lancée au démarrage de l'activité **/
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +57,7 @@ public class pageConnection extends AppCompatActivity {
 
         loginManager.logOut();
 
+        /** Gère l'utilisation du bouton facebook **/
         loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
 
 
@@ -104,7 +106,7 @@ public class pageConnection extends AppCompatActivity {
     }
 
 
-
+    /**  @param V bouton pour passer la connection facebook et rester en statut Visiteur**/
     public void onClick(View V){
         startActivity(i);
     }

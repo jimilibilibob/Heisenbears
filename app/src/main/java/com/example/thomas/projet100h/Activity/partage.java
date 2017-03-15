@@ -276,8 +276,6 @@ public class partage extends AppCompatActivity  implements NavigationView.OnNavi
 
             @Override
             protected String doInBackground(String... params) {
-                String result = null;
-                InputStream inputStream = null;
                 HttpClient httpclient = new DefaultHttpClient();
                 HttpPost httppost = new HttpPost("http://192.168.43.96:8080/heisenbears/publi/add");
                 try {
@@ -294,18 +292,12 @@ public class partage extends AppCompatActivity  implements NavigationView.OnNavi
                     nameValuePairs.add(new BasicNameValuePair("prioritaire", prioritaire+""));
                     httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
                     httpclient.execute(httppost);
-                    BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"), 8);
-                    StringBuilder sb = new StringBuilder();
-                    String line ;
-                    while ((line = reader.readLine()) != null)
-                    {
-                        sb.append(line + "\n");
-                    }
-                    result = sb.toString();
+
                 } catch (Exception e) {
                     Log.e("Error","Error in addPublication");
+                    e.printStackTrace();
                 }
-                return result;
+                return null;
             }
 
 

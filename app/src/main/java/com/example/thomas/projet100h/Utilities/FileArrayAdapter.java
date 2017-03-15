@@ -1,8 +1,7 @@
 package com.example.thomas.projet100h.Utilities;
 
-import android.app.Activity;
+
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Movie;
@@ -17,13 +16,11 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.VideoView;
 
-import com.example.thomas.projet100h.Activity.Actu;
 import com.example.thomas.projet100h.R;
 import com.example.thomas.projet100h.entities.Publication;
 
@@ -35,19 +32,15 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.params.BasicHttpParams;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
 
-import static com.example.thomas.projet100h.R.id.imageView;
 import static com.facebook.FacebookSdk.getApplicationContext;
 
-
+/** Utilities FileArrayAdapter, gère l'affichage des publications **/
 public class FileArrayAdapter extends ArrayAdapter<Publication> {
 
     private static final String TAG_VISIBILITY = "http://lowcost-env.pq8h39sfav.us-west-2.elasticbeanstalk.com/visibility/";
@@ -66,6 +59,7 @@ public class FileArrayAdapter extends ArrayAdapter<Publication> {
     private boolean visibility;
     private static URL URL_IMAGE ;
 
+    /** Créateur du FileArrayAdapter **/
     public FileArrayAdapter(Context context, int textViewResourceId,
                             List<Publication> objects, int idStatut) {
         super(context, textViewResourceId, objects);
@@ -75,11 +69,19 @@ public class FileArrayAdapter extends ArrayAdapter<Publication> {
         this.idStatut = idStatut;
     }
 
+    /** Getter de publication
+     * @param i position de la publication dans la list
+     * @return publciation à la position i **/
     public Publication getItem(int i)
     {
         return items.get(i);
     }
 
+    /** Gère l'affichage des lignes
+     * @param position position de la ligne
+     * @param convertView ligne
+     * @param parent ligne précèdente
+     * @return le listview compléter**/
     @NonNull
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
@@ -265,8 +267,8 @@ public class FileArrayAdapter extends ArrayAdapter<Publication> {
         return v;
     }
 
-
-
+    /** Fonction qui retourne l'image qui est stockée sur le serveur
+     * @param name nom de l'image**/
     private void Image(String name){
         final Bitmap[] bmp = new Bitmap[1];
         final String imageName = name;
@@ -316,6 +318,7 @@ public class FileArrayAdapter extends ArrayAdapter<Publication> {
         g.execute();
     }
 
+    /** Fonction qui change la visibiliter d'une publication**/
     private static void changeVisibility(){
         class Visibility extends AsyncTask<String, Void, String> {
 
@@ -357,6 +360,7 @@ public class FileArrayAdapter extends ArrayAdapter<Publication> {
         v.execute();
     }
 
+    /** Fonction qui suprime une publication**/
     private static void changeDelete(){
         class Delete extends AsyncTask<String, Void, String> {
 

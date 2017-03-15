@@ -26,7 +26,7 @@ import java.io.InputStreamReader;
 
 import static com.example.thomas.projet100h.Activity.pageConnection.user;
 
-
+/** Utilities connection, gère la connection des utilisateurs **/
 public class Connection extends AsyncTask<String, Void, String> {
 
     private static final String TAG_URL_USER ="http://lowcost-env.pq8h39sfav.us-west-2.elasticbeanstalk.com/user/";
@@ -36,12 +36,14 @@ public class Connection extends AsyncTask<String, Void, String> {
     private AccessToken accessToken;
     private static final String TAG_URL_ADD ="http://lowcost-env.pq8h39sfav.us-west-2.elasticbeanstalk.com/user/";
 
+    /** Créateur de la class Connection **/
     public Connection(String id, AccessToken accessToken){
         this.id = id;
         this.URL = this.TAG_URL_USER + id;
         this.accessToken = accessToken;
     }
 
+    /** Tache qui s'éxecute au lancement de la class **/
     @Override
     protected void onPreExecute() {
         // TODO Auto-generated method stub
@@ -49,18 +51,14 @@ public class Connection extends AsyncTask<String, Void, String> {
         Log.i("onPreExecute","onPreExecute");
     }
 
-    @Override
-    protected void onCancelled() {
-        super.onCancelled();
-        Log.i("makemachine", "onCancelled()");
-    }
-
+    /**Tache qui s'éxécute à la suite du onPreExecute
+     * @param params list de string
+     * @return result, resultat de la requète, l'utilisateur qui se connecte**/
     @Override
     protected String doInBackground(String... params) {
         DefaultHttpClient httpclient = new DefaultHttpClient(new BasicHttpParams());
         Log.e("url",URL);
         HttpGet httpget = new HttpGet(URL);
-        // Depends on your web service
         httpget.setHeader("Content-type", "application/json;charset=utf-8");
         InputStream inputStream = null;
         String result = null;
@@ -70,10 +68,9 @@ public class Connection extends AsyncTask<String, Void, String> {
             HttpResponse response = httpclient.execute(httpget);
             HttpEntity entity = response.getEntity();
             inputStream = entity.getContent();
-            // json is UTF-8 by default
             BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"), 8);
             StringBuilder sb = new StringBuilder();
-            String line = null;
+            String line;
             while ((line = reader.readLine()) != null)
             {
                 sb.append(line + "\n");
@@ -87,7 +84,8 @@ public class Connection extends AsyncTask<String, Void, String> {
             return result;
         }
 
-
+    /**Tache qui s'éxécute après le doInBackGround
+     * @param result le string renvoyé par le doInBackGround **/
     @Override
     protected void onPostExecute(String result){
 
@@ -119,7 +117,7 @@ public class Connection extends AsyncTask<String, Void, String> {
     }
 
 
-
+    /** Fonction qui s'éxécute à la première connection de chaque utilisateur **/
     public void FirstConnection() {
 
         GraphRequest request = GraphRequest.newMeRequest(
@@ -144,7 +142,11 @@ public class Connection extends AsyncTask<String, Void, String> {
         request.setParameters(parameters);
         request.executeAsync();
 
+        /** Ajoute l'utilisateur dans la BDD**/
         class AddUser extends AsyncTask<String, Void, String> {
+            /** Tache qui s'éxécutera au lancement de la class, elle s'éxécute
+             * @param params prend en parametre une liste de string
+             * @return string return le resultat de la requete en string**/
             @Override
             protected String doInBackground(String... params) {
                 DefaultHttpClient httpclient = new DefaultHttpClient(new BasicHttpParams());
@@ -179,7 +181,8 @@ public class Connection extends AsyncTask<String, Void, String> {
                 return result;
             }
 
-
+            /** S'éxécute à la suite du doInBackGround
+             * @param result prend en paramètre le result renvoyé par le doInBackGround **/
             @Override
             protected void onPostExecute(String result) {
                 try {

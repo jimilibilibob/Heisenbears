@@ -41,7 +41,6 @@ public class Acceuil extends AppCompatActivity
     private Intent intent;
     private TextView textView;
     private static final String TAG_TEXTE = "texte";
-    private static final String TAG_DATE = "datePublication";
     private static final String TAG_ID ="IdPublication";
     private static final String TAG_IDMEDIA ="idMedia";
     private static final String TAG_CONTENUMEDIA ="contenuMedia";
@@ -55,8 +54,10 @@ public class Acceuil extends AppCompatActivity
 
     private ListView list;
     @Override
+    /** onCreate, fonction lancée au démarrage de l'activité **/
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        /**On associe les parties "visible" de l'application à l'activité **/
         setContentView(R.layout.activity_acceuil);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -71,16 +72,17 @@ public class Acceuil extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
         textView = (TextView) findViewById(R.id.textView2);
-
         list = (ListView) findViewById(R.id.listView);
         publications = new ArrayList<>();
+
+        /** On lance l'affichage des news**/
         getDataAncre();
         getDataList();
 
     }
 
+    /** Fonction permettant de quitter le menu **/
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -92,7 +94,8 @@ public class Acceuil extends AppCompatActivity
     }
 
 
-
+    /** Fonction permettant de clicquer sur les items du menu et d'associer à chaque item une action
+     * @param item l'item sur lequel l'utilisateur a cliquer **/
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -123,12 +126,19 @@ public class Acceuil extends AppCompatActivity
         return true;
     }
 
+    /** Affiche dans le listeView les 5 dernières publciation**/
     public void getDataList(){
+        /** Class qui récupere les pubications en question, cette class descend de Asyntask, elle ne s'éxécute pas dans le même
+         * timing que les autres activitées visibles**/
         class GetDataJSON extends AsyncTask<String, Void, String> {
 
+            /** Tache qui s'éxécutera au lancement de la class, elle s'éxécute
+             * @param params prend en parametre une liste de string
+             * @return string return le resultat de la requete en string**/
             @Override
             protected String doInBackground(String... params) {
                 DefaultHttpClient httpclient = new DefaultHttpClient(new BasicHttpParams());
+                /**Méthode GET, prend en paramètre l'URL du webservice  **/
                 HttpGet httpget = new HttpGet(TAG_URL_LIST+"1"+"-0");
                 httpget.setHeader("Content-type", "application/json");
                 InputStream inputStream = null;
@@ -158,10 +168,13 @@ public class Acceuil extends AppCompatActivity
                 return result;
             }
 
+            /** S'éxécute à la suite du doInBackGround
+             * @param result prend en paramètre le result renvoyé par le doInBackGround **/
             @Override
             protected void onPostExecute(String result){
                 try {
-
+                    /** Transforme de result en une list de Json qui seront associé a une publication pour etre en suite retourné
+                     * au FileArrayAdapter **/
                     JSONArray jsonObj = new JSONArray(result);
                     for(int i=0;i<jsonObj.length();i++){
                         JSONObject c = jsonObj.getJSONObject(i);
@@ -172,9 +185,8 @@ public class Acceuil extends AppCompatActivity
                         int idPubli = Integer.parseInt(id);
                         int idmediaPubli = Integer.parseInt(idmedia);
                         boolean visibility = c.getBoolean(TAG_VISIBILITY);
-                        Date datePubli = new Date();
                         Log.e("IdPublication_Acceuil",id);
-                        Publication publi = new Publication( media, texte, datePubli,  idPubli,  idmediaPubli, visibility);
+                        Publication publi = new Publication( media, texte,  idPubli,  idmediaPubli, visibility);
 
                         publications.add(publi);
                     }
@@ -189,9 +201,12 @@ public class Acceuil extends AppCompatActivity
         g.execute();
     }
 
+    /** Affiche dans la publication ancré la dernière publication ancré de la BDD **/
     public void getDataAncre(){
         class GetDataJSON extends AsyncTask<String, Void, String> {
-
+            /** Tache qui s'éxécutera au lancement de la class, elle s'éxécute
+            * @param params prend en parametre une liste de string
+            * @return string return le resultat de la requete en string**/
             @Override
             protected String doInBackground(String... params) {
                 DefaultHttpClient httpclient = new DefaultHttpClient(new BasicHttpParams());
@@ -224,6 +239,8 @@ public class Acceuil extends AppCompatActivity
                 return result;
             }
 
+            /** S'éxécute à la suite du doInBackGround
+             * @param result prend en paramètre le result renvoyé par le doInBackGround **/
             @Override
             protected void onPostExecute(String result){
                 try {

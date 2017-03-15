@@ -46,12 +46,10 @@ public class Actu extends AppCompatActivity implements NavigationView.OnNavigati
 
     private Intent intent;
     private FileArrayAdapter adapter;
-    private String idFacebook;
     private int idStatut;
     private List<Publication> publications;
     private ListView list;
     private static final String TAG_TEXTE = "texte";
-    private static final String TAG_DATE = "datePublication";
     private static final String TAG_ID ="IdPublication";
     private static final String TAG_IDMEDIA ="idMedia";
     private static final String TAG_VISIBILITY ="validation";
@@ -61,7 +59,7 @@ public class Actu extends AppCompatActivity implements NavigationView.OnNavigati
     private String idLastPublication;
     private int topPubli;
 
-
+    /** onCreate, fonction lancée au démarrage de l'activité **/
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,13 +81,13 @@ public class Actu extends AppCompatActivity implements NavigationView.OnNavigati
 
         list = (ListView) findViewById(R.id.listViewActu);
         publications = new ArrayList<>();
-
+        idStatut = user.getIdStatut();
         getDataList();
 
     }
 
 
-
+    /** Fonction permettant de quitter le menu **/
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -103,7 +101,8 @@ public class Actu extends AppCompatActivity implements NavigationView.OnNavigati
 
 
 
-
+    /** Fonction permettant de clicquer sur les items du menu et d'associer à chaque item une action
+     * @param item l'item sur lequel l'utilisateur a cliquer **/
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -136,17 +135,18 @@ public class Actu extends AppCompatActivity implements NavigationView.OnNavigati
         return true;
     }
 
-
+    /** Affiche dans le listeView les publciations, en fonction de l'id de l'utilisateur **/
     public void getDataList(){
         class GetDataJSON extends AsyncTask<String, Void, String> {
-
+            /** Tache qui s'éxécutera au lancement de la class, elle s'éxécute
+             * @param params prend en parametre une liste de string
+             * @return string return le resultat de la requete en string**/
             @Override
             protected String doInBackground(String... params) {
                 DefaultHttpClient httpclient = new DefaultHttpClient(new BasicHttpParams());
-                idStatut = user.getIdStatut();
+
                 Log.e("URL",TAG_URL_LIST+idStatut+"-0");
                 HttpGet httpget = new HttpGet(TAG_URL_LIST+idStatut+"-0");
-                // Depends on your web service
                 httpget.setHeader("Content-type", "application/json");
                 InputStream inputStream = null;
                 String result = null;
@@ -154,10 +154,9 @@ public class Actu extends AppCompatActivity implements NavigationView.OnNavigati
                     HttpResponse response = httpclient.execute(httpget);
                     HttpEntity entity = response.getEntity();
                     inputStream = entity.getContent();
-                    // json is UTF-8 by default
                     BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"), 8);
                     StringBuilder sb = new StringBuilder();
-                    String line = null;
+                    String line;
                     while ((line = reader.readLine()) != null)
                     {
                         sb.append(line + "\n");
@@ -172,6 +171,8 @@ public class Actu extends AppCompatActivity implements NavigationView.OnNavigati
                 return result;
             }
 
+            /** S'éxécute à la suite du doInBackGround
+             * @param result prend en paramètre le result renvoyé par le doInBackGround **/
             @Override
             protected void onPostExecute(String result){
                 try {
@@ -180,17 +181,13 @@ public class Actu extends AppCompatActivity implements NavigationView.OnNavigati
                     for(int i=0;i<jsonObj.length();i++){
                         JSONObject c = jsonObj.getJSONObject(i);
                         String  texte = c.getString(TAG_TEXTE);
-                       // String  date = c.getString(TAG_DATE);
                         String idPublication = c.getString(TAG_ID);
                         String  idmedia = c.getString(TAG_IDMEDIA) ;
                         String media  = c.getString(TAG_CONTENUMEDIA);
                         int idPubli = Integer.parseInt(idPublication);
                         int idmediaPubli = Integer.parseInt(idmedia);
                         boolean visibility = c.getBoolean(TAG_VISIBILITY);
-                        //DateFormat format = new SimpleDateFormat("MMM dd, yyyy", Locale.FRANCE);
-                      //  Date datePubli = format.parse(date);
-                        Date datePubli = new Date();
-                        Publication publi = new Publication( media, texte, datePubli,  idPubli,  idmediaPubli, visibility);
+                        Publication publi = new Publication( media, texte, idPubli,  idmediaPubli, visibility);
 
                         publications.add(publi);
                         idLastPublication = idPublication;
@@ -211,18 +208,19 @@ public class Actu extends AppCompatActivity implements NavigationView.OnNavigati
         GetDataJSON g = new GetDataJSON();
         g.execute();
     }
-
+    /** Fonction qui affiche 5 publications de plus dans le listview  **/
     public void More(View v){
         topPubli = publications.size() - 1;
         class GetDataJSON extends AsyncTask<String, Void, String> {
 
+            /** Tache qui s'éxécutera au lancement de la class, elle s'éxécute
+             * @param params prend en parametre une liste de string
+             * @return string return le resultat de la requete en string**/
             @Override
             protected String doInBackground(String... params) {
                 DefaultHttpClient httpclient = new DefaultHttpClient(new BasicHttpParams());
-                idStatut = user.getIdStatut();
                 Log.e("URL",TAG_URL_LIST+idStatut+idLastPublication);
                 HttpGet httpget = new HttpGet(TAG_URL_LIST+idStatut+"-"+idLastPublication);
-                // Depends on your web service
                 httpget.setHeader("Content-type", "application/json");
                 InputStream inputStream = null;
                 String result = null;
@@ -230,10 +228,9 @@ public class Actu extends AppCompatActivity implements NavigationView.OnNavigati
                     HttpResponse response = httpclient.execute(httpget);
                     HttpEntity entity = response.getEntity();
                     inputStream = entity.getContent();
-                    // json is UTF-8 by default
                     BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"), 8);
                     StringBuilder sb = new StringBuilder();
-                    String line = null;
+                    String line;
                     while ((line = reader.readLine()) != null)
                     {
                         sb.append(line + "\n");
@@ -248,6 +245,8 @@ public class Actu extends AppCompatActivity implements NavigationView.OnNavigati
                 return result;
             }
 
+            /** S'éxécute à la suite du doInBackGround
+             * @param result prend en paramètre le result renvoyé par le doInBackGround **/
             @Override
             protected void onPostExecute(String result){
                 try {
@@ -256,17 +255,13 @@ public class Actu extends AppCompatActivity implements NavigationView.OnNavigati
                     for(int i=0;i<jsonObj.length();i++){
                         JSONObject c = jsonObj.getJSONObject(i);
                         String  texte = c.getString(TAG_TEXTE);
-                        // String  date = c.getString(TAG_DATE);
                         String idPublication = c.getString(TAG_ID);
                         String  idmedia = c.getString(TAG_IDMEDIA) ;
                         String media  = c.getString(TAG_CONTENUMEDIA);
                         int idPubli = Integer.parseInt(idPublication);
                         int idmediaPubli = Integer.parseInt(idmedia);
                         boolean visibility = c.getBoolean(TAG_VISIBILITY);
-                        //DateFormat format = new SimpleDateFormat("MMM dd, yyyy", Locale.FRANCE);
-                        //  Date datePubli = format.parse(date);
-                        Date datePubli = new Date();
-                        Publication publi = new Publication( media, texte, datePubli,  idPubli,  idmediaPubli, visibility);
+                        Publication publi = new Publication( media, texte,  idPubli,  idmediaPubli, visibility);
 
                         publications.add(publi);
                         idLastPublication = idPublication;

@@ -51,7 +51,7 @@ public class profil extends AppCompatActivity  implements NavigationView.OnNavig
     private String messageSignalement;
     private Intent intent;
 
-
+    /** onCreate, fonction lancée au démarrage de l'activité **/
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -145,6 +145,7 @@ public class profil extends AppCompatActivity  implements NavigationView.OnNavig
 
     }
 
+    /** Fonction permettant de quitter le menu **/
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -156,7 +157,8 @@ public class profil extends AppCompatActivity  implements NavigationView.OnNavig
     }
 
 
-
+    /** Fonction permettant de clicquer sur les items du menu et d'associer à chaque item une action
+     * @param item l'item sur lequel l'utilisateur a cliquer **/
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -188,7 +190,7 @@ public class profil extends AppCompatActivity  implements NavigationView.OnNavig
         return true;
     }
 
-
+    /**  @param V bouton pour se signaler comme étant un joueur**/
     public void signalement2(View V){
         Log.e("Signalement","Onclic");
         if(!(idFacebook.equals("null"))){
@@ -243,33 +245,40 @@ public class profil extends AppCompatActivity  implements NavigationView.OnNavig
         }
     }
 
+    /**  @param V bouton pour aller à la page de partage**/
     public void share(View V){
         Log.e("2","share");
         intent = new Intent(this, partage.class);
         startActivity(intent);
     }
 
+    /**  @param V bouton pour accéder à la page des informations du profil**/
     public void information(View V){
         Log.e("3","information");
     }
 
+    /**  @param V bouton pour télécharger le playbook**/
     public void playbook(View V){
         Log.e("4","playbook");
     }
 
+    /**  @param V bouton pour accéder à la page public facebook**/
     public void pageFb(View V){
         Log.e("5","pageFb");
     }
 
+    /**  @param V bouton pour envoyer une notification**/
     public void notification(View V){
         Log.e("6","notification");
     }
 
+    /**  @param V bouton pour gérer le profil des joueurs**/
     public void gestion_profil(View V){
 
         Log.e("7","gestion_profil");
     }
 
+    /**  @param V bouton pour accéder au groupe faceook**/
     public void grouFb(View V){
         Log.e("8","grouFb");
     }
