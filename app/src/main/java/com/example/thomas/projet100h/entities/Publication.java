@@ -1,7 +1,7 @@
 package com.example.thomas.projet100h.entities;
 
 
-import java.util.Date;
+
 
 
 
@@ -49,7 +49,7 @@ public class Publication implements Comparable<Publication>{
         this.visibility = visibility;
     }
 
-    /**  @param o
+    /**  @param o publication
      * @return 0**/
     @Override
     public int compareTo(Publication o) {

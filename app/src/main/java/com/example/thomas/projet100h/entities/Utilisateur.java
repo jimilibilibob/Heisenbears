@@ -1,8 +1,6 @@
 package com.example.thomas.projet100h.entities;
 
-/**
- * Created by Thomas on 12/02/2017.
- */
+
 
 
 

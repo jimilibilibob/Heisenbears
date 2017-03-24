@@ -59,6 +59,9 @@ public class Acceuil extends AppCompatActivity
         super.onCreate(savedInstanceState);
         /**On associe les parties "visible" de l'application à l'activité **/
         setContentView(R.layout.activity_acceuil);
+
+
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -67,11 +70,10 @@ public class Acceuil extends AppCompatActivity
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
-
-
-
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+
         textView = (TextView) findViewById(R.id.textView2);
         list = (ListView) findViewById(R.id.listView);
         publications = new ArrayList<>();
@@ -107,7 +109,8 @@ public class Acceuil extends AppCompatActivity
             intent = new Intent(this, Actu.class);
             startActivity(intent);
         } else if (id == R.id.nav_jeu) {
-
+            intent = new Intent(this, jeu.class);
+            startActivity(intent);
         } else if (id == R.id.nav_equipe) {
 
         } else if (id == R.id.nav_resCal) {
