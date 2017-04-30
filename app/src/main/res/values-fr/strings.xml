@@ -35,4 +35,5 @@
     <string name="titre">Titre</string>
     <string name="épingler">Epingler</string>
     <string name="priver">Priver</string>
+    <string name="back">retour</string>
 </resources>

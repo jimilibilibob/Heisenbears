@@ -39,7 +39,8 @@
             tools:replace="android:theme" />
         <activity android:name=".Activity.profil" />
         <activity android:name=".Activity.partage" />
-        <activity android:name=".Activity.jeu"></activity>
+        <activity android:name=".Activity.jeu" />
+        <activity android:name=".Activity.roster" />
     </application>
 
 </manifest>

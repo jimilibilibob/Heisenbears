@@ -58,6 +58,7 @@ public class FileArrayAdapter extends ArrayAdapter<Publication> {
     private static String URL_DELETE ;
     private boolean visibility;
     private static URL URL_IMAGE ;
+    Bitmap bitmap;
 
     /** Créateur du FileArrayAdapter **/
     public FileArrayAdapter(Context context, int textViewResourceId,
@@ -67,6 +68,7 @@ public class FileArrayAdapter extends ArrayAdapter<Publication> {
         id = textViewResourceId;
         items = objects;
         this.idStatut = idStatut;
+
     }
 
     /** Getter de publication
@@ -288,7 +290,10 @@ public class FileArrayAdapter extends ArrayAdapter<Publication> {
 
                     InputStream inputStream = urlConnection.getInputStream();
                     if (inputStream != null) {
-                        Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+                        BitmapFactory.Options options = new BitmapFactory.Options();
+                        bitmap = BitmapFactory.decodeStream(inputStream,null,options);
+
+
                         return bitmap;
                     }
                 } catch (Exception e) {

@@ -1,6 +1,7 @@
 package com.example.thomas.projet100h.Activity;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -265,6 +266,10 @@ public class profil extends AppCompatActivity  implements NavigationView.OnNavig
     /**  @param V bouton pour accéder à la page public facebook**/
     public void pageFb(View V){
         Log.e("5","pageFb");
+        String url = "https://www.facebook.com/heisenbears/?fref=ts";
+        Intent i = new Intent(Intent.ACTION_VIEW);
+        i.setData(Uri.parse(url));
+        startActivity(i);
     }
 
     /**  @param V bouton pour envoyer une notification**/
@@ -280,6 +285,10 @@ public class profil extends AppCompatActivity  implements NavigationView.OnNavig
 
     /**  @param V bouton pour accéder au groupe faceook**/
     public void grouFb(View V){
+        String url = "https://www.facebook.com/groups/406565032802791/";
+        Intent i = new Intent(Intent.ACTION_VIEW);
+        i.setData(Uri.parse(url));
+        startActivity(i);
         Log.e("8","grouFb");
     }
 

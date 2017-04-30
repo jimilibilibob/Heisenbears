@@ -9,14 +9,23 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.Layout;
 import android.util.Log;
 import android.view.MenuItem;
-import android.widget.ListView;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.GridView;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.example.thomas.projet100h.Utilities.FileArrayAdapter;
-import com.example.thomas.projet100h.entities.Publication;
 import com.example.thomas.projet100h.R;
+import com.example.thomas.projet100h.Utilities.FileArrayAdapter;
+import com.example.thomas.projet100h.Utilities.RosterAdapter;
+import com.example.thomas.projet100h.entities.Publication;
+import com.example.thomas.projet100h.entities.Utilisateur;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -31,35 +40,27 @@ import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
-
-public class Acceuil extends AppCompatActivity
+public class roster extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-
+    private final static String TAG_URL_LIST = "http://192.168.1.16:8080/heisenbears/list/user/1";
     private Intent intent;
-    private TextView textView;
-    private static final String TAG_TEXTE = "texte";
-    private static final String TAG_ID ="IdPublication";
-    private static final String TAG_IDMEDIA ="idMedia";
-    private static final String TAG_CONTENUMEDIA ="contenuMedia";
-    private static final String TAG_VISIBILITY ="validation";
-    private static final String TAG_URL_LIST ="http://lowcost-env.pq8h39sfav.us-west-2.elasticbeanstalk.com/list/";
-    private static final String TAG_URL_ANCRE ="http://lowcost-env.pq8h39sfav.us-west-2.elasticbeanstalk.com/ancre";
+    GridView gridView;
+    private RosterAdapter rosterAdapter;
+    private List<Utilisateur> users;
+    TextView poste;
+    TextView poid;
+    TextView taille;
+    TextView nom;
+    TextView desc;
+    ImageView img;
+    LinearLayout rosterDetail;
 
-    private String ancre;
-    private FileArrayAdapter adapter;
-    private List<Publication> publications;
-
-    private ListView list;
     @Override
-    /** onCreate, fonction lancée au démarrage de l'activité **/
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        /**On associe les parties "visible" de l'application à l'activité **/
-        setContentView(R.layout.activity_acceuil);
-
+        setContentView(R.layout.activity_roster);
 
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -74,15 +75,33 @@ public class Acceuil extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
 
-        textView = (TextView) findViewById(R.id.textView2);
-        list = (ListView) findViewById(R.id.listView);
-        publications = new ArrayList<>();
+        poste = (TextView) findViewById(R.id.posteRoster);
+        poid = (TextView) findViewById(R.id.poidRoster);
+        taille = (TextView) findViewById(R.id.tailleRoster);
+        nom = (TextView) findViewById(R.id.nomRoster);
+        img = (ImageView) findViewById(R.id.imageViewRoster);
+        users = new ArrayList<>();
 
-        /** On lance l'affichage des news**/
-        getDataAncre();
-        getDataList();
+        rosterDetail = (LinearLayout) findViewById(R.id.rosterDetail);
+        rosterDetail.setVisibility(View.GONE);
 
+        gridView = (GridView) findViewById(R.id.grid);
+
+       gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> parent, View v,
+                                    int position, long id) {
+                Toast.makeText(
+                        getApplicationContext(), users.get(position).getNom(), Toast.LENGTH_SHORT).show();
+                detail(position);
+
+
+            }
+        });
+
+        getRoster();
     }
+
+
 
     /** Fonction permettant de quitter le menu **/
     @Override
@@ -112,8 +131,7 @@ public class Acceuil extends AppCompatActivity
             intent = new Intent(this, jeu.class);
             startActivity(intent);
         } else if (id == R.id.nav_equipe) {
-            intent = new Intent(this, roster.class);
-            startActivity(intent);
+
         } else if (id == R.id.nav_resCal) {
 
         } else if (id == R.id.nav_profil) {
@@ -130,20 +148,21 @@ public class Acceuil extends AppCompatActivity
         return true;
     }
 
-    /** Affiche dans le listeView les 5 dernières publciation**/
-    public void getDataList(){
+    public void getRoster(){
         /** Class qui récupere les pubications en question, cette class descend de Asyntask, elle ne s'éxécute pas dans le même
          * timing que les autres activitées visibles**/
-        class GetDataJSON extends AsyncTask<String, Void, String> {
+        class GetDataJSON extends AsyncTask<Integer, Void, String> {
 
             /** Tache qui s'éxécutera au lancement de la class, elle s'éxécute
              * @param params prend en parametre une liste de string
              * @return string return le resultat de la requete en string**/
+
+
             @Override
-            protected String doInBackground(String... params) {
+            protected String doInBackground(Integer[] params) {
                 DefaultHttpClient httpclient = new DefaultHttpClient(new BasicHttpParams());
                 /**Méthode GET, prend en paramètre l'URL du webservice  **/
-                HttpGet httpget = new HttpGet(TAG_URL_LIST+"1"+"-0");
+                HttpGet httpget = new HttpGet(TAG_URL_LIST);
                 httpget.setHeader("Content-type", "application/json");
                 InputStream inputStream = null;
                 String result = null;
@@ -177,25 +196,27 @@ public class Acceuil extends AppCompatActivity
             @Override
             protected void onPostExecute(String result){
                 try {
+                    Log.e("error", result);
                     /** Transforme de result en une list de Json qui seront associé a une publication pour etre en suite retourné
                      * au FileArrayAdapter **/
                     JSONArray jsonObj = new JSONArray(result);
                     for(int i=0;i<jsonObj.length();i++){
                         JSONObject c = jsonObj.getJSONObject(i);
-                        String  texte = c.getString(TAG_TEXTE);
-                        String id = c.getString(TAG_ID);
-                        String  idmedia = c.getString(TAG_IDMEDIA) ;
-                        String media  = c.getString(TAG_CONTENUMEDIA);
-                        int idPubli = Integer.parseInt(id);
-                        int idmediaPubli = Integer.parseInt(idmedia);
-                        boolean visibility = c.getBoolean(TAG_VISIBILITY);
-                        Log.e("IdPublication_Acceuil",id);
-                        Publication publi = new Publication( media, texte,  idPubli,  idmediaPubli, visibility);
+                        String  idFacebook = c.getString("idFacebook");
+                        int idStatut =  c.getInt("idStatut");
+                        String nom = c.getString("nom");
+                        String  prenom = c.getString("prenom") ;
+                        int tel  = c.getInt("telephone");
+                        int idPoste =  c.getInt("idPoste");
+                        int poid =  c.getInt("poid");
+                        int taille =  c.getInt("taille");
+                        Log.e("idFacebook",idFacebook);
+                        Utilisateur user = new Utilisateur( idFacebook,idStatut, nom,  prenom,  tel,poid,taille,idPoste);
 
-                        publications.add(publi);
+                        users.add(user);
                     }
-                    adapter = new FileArrayAdapter( Acceuil.this, R.layout.list_item, publications, 1);
-                    list.setAdapter(adapter);
+                    rosterAdapter = new RosterAdapter(roster.this, users);
+                    gridView.setAdapter(rosterAdapter);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -205,73 +226,18 @@ public class Acceuil extends AppCompatActivity
         g.execute();
     }
 
-    /** Affiche dans la publication ancré la dernière publication ancré de la BDD **/
-    public void getDataAncre(){
-        class GetDataJSON extends AsyncTask<String, Void, String> {
-            /** Tache qui s'éxécutera au lancement de la class, elle s'éxécute
-            * @param params prend en parametre une liste de string
-            * @return string return le resultat de la requete en string**/
-            @Override
-            protected String doInBackground(String... params) {
-                DefaultHttpClient httpclient = new DefaultHttpClient(new BasicHttpParams());
-                HttpGet httpget = new HttpGet(TAG_URL_ANCRE);
-                httpget.setHeader("Content-type", "application/json");
-                InputStream inputStream = null;
-                String result = null;
-                try {
-                    HttpResponse response = httpclient.execute(httpget);
-                    HttpEntity entity = response.getEntity();
-                    inputStream = entity.getContent();
-                    BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"), 8);
-                    StringBuilder sb = new StringBuilder();
-                    String line;
-                    while ((line = reader.readLine()) != null)
-                    {
-                        sb.append(line + "\n");
-                    }
-                    result = sb.toString();
-                } catch (Exception e) {
-                    Log.e("Error"," Error in getDataAnre");
-                }
-                finally {
-                    try{
-                        if(inputStream != null)inputStream.close();
-                    }catch(Exception squish){
-                        Log.e("Error"," Error in getDataAnre");
-                    }
-                }
-                return result;
-            }
+    public void detail(int pos){
+        gridView.setVisibility(View.GONE);
+        rosterDetail.setVisibility(View.VISIBLE);
 
-            /** S'éxécute à la suite du doInBackGround
-             * @param result prend en paramètre le result renvoyé par le doInBackGround **/
-            @Override
-            protected void onPostExecute(String result){
-                try {
-
-                    JSONObject c = new JSONObject(result);
-                    String  texte = c.getString(TAG_TEXTE);
-                    String id = c.getString(TAG_ID);
-                    String  idmedia = c.getString(TAG_IDMEDIA) ;
-                    String media  = c.getString(TAG_CONTENUMEDIA);
-                    //int idPubli = Integer.parseInt(id);
-                    int idmediaPubli = Integer.parseInt(idmedia);
-                    ancre = texte;
-
-                }  catch (JSONException e1) {
-                    e1.printStackTrace();
-                }
-
-                textView.setText(ancre);
-
-
-            }
-        }
-        GetDataJSON g = new GetDataJSON();
-        g.execute();
+        poste.setText(users.get(pos).getPoste());
+        poid.setText(users.get(pos).getPoid()+"");
+        taille.setText(users.get(pos).getTaille()+"");
+        nom.setText(users.get(pos).getNom()+" "+users.get(pos).getPrenom());
     }
 
-
-
-
+    public void change(View v){
+        gridView.setVisibility(View.VISIBLE);
+        rosterDetail.setVisibility(View.GONE);
+    }
 }

@@ -20,14 +20,14 @@
 
     <LinearLayout
         android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:id="@+id/layout">
 
         <RelativeLayout
             android:orientation="horizontal"
             android:layout_width="wrap_content"
-            android:layout_height="30dp">
+            android:layout_height="wrap_content">
 
             <LinearLayout
                 android:orientation="vertical"
@@ -39,15 +39,16 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/video"
                     android:gravity="left"
-                    android:layout_weight="1" />
+                    android:layout_weight="1"
+                    android:maxHeight="200dp"/>
 
                 <ImageView
                     android:layout_width="match_parent"
-                    android:layout_height="100dp"
+                    android:layout_height="200dp"
                     android:id="@+id/image"
                     android:layout_weight="1"
                     android:maxWidth="100dp"
-                    android:maxHeight="100dp"
+                    android:maxHeight="200dp"
                     app:srcCompat="@drawable/com_facebook_profile_picture_blank_square" />
 
                 <TextView

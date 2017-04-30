@@ -277,7 +277,7 @@ public class partage extends AppCompatActivity  implements NavigationView.OnNavi
             @Override
             protected String doInBackground(String... params) {
                 HttpClient httpclient = new DefaultHttpClient();
-                HttpPost httppost = new HttpPost("http://192.168.43.96:8080/heisenbears/publi/add");
+                HttpPost httppost = new HttpPost("http://192.168.1.16:8080/heisenbears/publi/add");
                 try {
 
                     List<NameValuePair> nameValuePairs = new ArrayList<>(2);
@@ -286,6 +286,7 @@ public class partage extends AppCompatActivity  implements NavigationView.OnNavi
                     nameValuePairs.add(new BasicNameValuePair("datePublication", datePublication.toString()));
                     nameValuePairs.add(new BasicNameValuePair("texte", texte));
                     nameValuePairs.add(new BasicNameValuePair("contenuMedia", contenuMedia));
+                    nameValuePairs.add(new BasicNameValuePair("tailleCM", contenuMedia.length()+""));
                     Log.e("contenuMedia", contenuMedia);
                     nameValuePairs.add(new BasicNameValuePair("publique", publique+""));
                     nameValuePairs.add(new BasicNameValuePair("validation", validation+""));
@@ -309,7 +310,7 @@ public class partage extends AppCompatActivity  implements NavigationView.OnNavi
 
     public String getStringImage(Bitmap bmp){
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bmp.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        bmp.compress(Bitmap.CompressFormat.JPEG, 70, baos);
         byte[] imageBytes = baos.toByteArray();
         return Base64.encodeToString(imageBytes, Base64.DEFAULT);
     }
