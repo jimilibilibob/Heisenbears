@@ -39,7 +39,7 @@
     <string name="titre">Title</string>
     <string name="épingler">Pin</string>
     <string name="priver">Private</string>
-    <string name="title_activity_scrolling">ScrollingActivity</string>
+    <string name="title_activity_scrolling" translatable="false">ScrollingActivity</string>
     <string name="large_text">
         "Material is the metaphor.\n\n"
 
@@ -130,4 +130,5 @@
         "when a user tries to pick up one of cards.\n\n"
     </string>
     <string name="back">back</string>
+    <string name="send">send</string>
 </resources>

@@ -275,11 +275,12 @@ public class profil extends AppCompatActivity  implements NavigationView.OnNavig
     /**  @param V bouton pour envoyer une notification**/
     public void notification(View V){
         Log.e("6","notification");
+        intent = new Intent(this, roster.class);
+        startActivity(intent);
     }
 
     /**  @param V bouton pour gérer le profil des joueurs**/
     public void gestion_profil(View V){
-
         Log.e("7","gestion_profil");
     }
 
