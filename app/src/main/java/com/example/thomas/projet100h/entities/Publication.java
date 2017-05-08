@@ -6,7 +6,7 @@ package com.example.thomas.projet100h.entities;
 
 
 /** Entities Publciation, gère les publications  **/
-public class Publication implements Comparable<Publication>{
+public class Publication {
     private String media;
     private String texte;
     private int idPublication;
@@ -49,10 +49,5 @@ public class Publication implements Comparable<Publication>{
         this.visibility = visibility;
     }
 
-    /**  @param o publication
-     * @return 0**/
-    @Override
-    public int compareTo(Publication o) {
-        return 0;
-    }
+
 }
