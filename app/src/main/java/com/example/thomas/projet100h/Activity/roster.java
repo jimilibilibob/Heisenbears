@@ -44,7 +44,7 @@ import java.util.List;
 
 public class roster extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-    private final static String TAG_URL_LIST = "http://192.168.1.16:8080/heisenbears/list/user/1";
+    private final static String TAG_URL_LIST = "http://lowcost-env.pq8h39sfav.us-west-2.elasticbeanstalk.com/list/user/";
     private Intent intent;
     GridView gridView;
     private RosterAdapter rosterAdapter;
@@ -53,7 +53,6 @@ public class roster extends AppCompatActivity
     TextView poid;
     TextView taille;
     TextView nom;
-    TextView desc;
     ImageView img;
     LinearLayout rosterDetail;
 
@@ -98,7 +97,9 @@ public class roster extends AppCompatActivity
             }
         });
 
-        getRoster();
+        getRoster2();
+        getRoster3();
+        getRoster4();
     }
 
 
@@ -148,7 +149,7 @@ public class roster extends AppCompatActivity
         return true;
     }
 
-    public void getRoster(){
+    public void getRoster2(){
         /** Class qui récupere les pubications en question, cette class descend de Asyntask, elle ne s'éxécute pas dans le même
          * timing que les autres activitées visibles**/
         class GetDataJSON extends AsyncTask<Integer, Void, String> {
@@ -162,7 +163,7 @@ public class roster extends AppCompatActivity
             protected String doInBackground(Integer[] params) {
                 DefaultHttpClient httpclient = new DefaultHttpClient(new BasicHttpParams());
                 /**Méthode GET, prend en paramètre l'URL du webservice  **/
-                HttpGet httpget = new HttpGet(TAG_URL_LIST);
+                HttpGet httpget = new HttpGet(TAG_URL_LIST+"2");
                 httpget.setHeader("Content-type", "application/json");
                 InputStream inputStream = null;
                 String result = null;
@@ -207,11 +208,169 @@ public class roster extends AppCompatActivity
                         String nom = c.getString("nom");
                         String  prenom = c.getString("prenom") ;
                         int tel  = c.getInt("telephone");
-                        int idPoste =  c.getInt("idPoste");
                         int poid =  c.getInt("poid");
                         int taille =  c.getInt("taille");
-                        Log.e("idFacebook",idFacebook);
-                        Utilisateur user = new Utilisateur( idFacebook,idStatut, nom,  prenom,  tel,poid,taille,idPoste);
+                        String lebelle = c.getString("poste");
+                        String img = c.getString("image");
+                        Utilisateur user = new Utilisateur( idFacebook,idStatut, nom,  prenom,  tel,poid,taille,lebelle, img);
+
+                        users.add(user);
+                    }
+                    rosterAdapter = new RosterAdapter(roster.this, users);
+                    gridView.setAdapter(rosterAdapter);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        GetDataJSON g = new GetDataJSON();
+        g.execute();
+    }
+
+    public void getRoster3(){
+        /** Class qui récupere les pubications en question, cette class descend de Asyntask, elle ne s'éxécute pas dans le même
+         * timing que les autres activitées visibles**/
+        class GetDataJSON extends AsyncTask<Integer, Void, String> {
+
+            /** Tache qui s'éxécutera au lancement de la class, elle s'éxécute
+             * @param params prend en parametre une liste de string
+             * @return string return le resultat de la requete en string**/
+
+
+            @Override
+            protected String doInBackground(Integer[] params) {
+                DefaultHttpClient httpclient = new DefaultHttpClient(new BasicHttpParams());
+                /**Méthode GET, prend en paramètre l'URL du webservice  **/
+                HttpGet httpget = new HttpGet(TAG_URL_LIST+"3");
+                httpget.setHeader("Content-type", "application/json");
+                InputStream inputStream = null;
+                String result = null;
+                try {
+                    HttpResponse response = httpclient.execute(httpget);
+                    HttpEntity entity = response.getEntity();
+                    inputStream = entity.getContent();
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"), 8);
+                    StringBuilder sb = new StringBuilder();
+                    String line;
+                    while ((line = reader.readLine()) != null)
+                    {
+                        sb.append(line + "\n");
+                    }
+                    result = sb.toString();
+                } catch (Exception e) {
+                    Log.e("Error"," Error in getDataList");
+                }
+                finally {
+                    try{
+                        if(inputStream != null)inputStream.close();
+                    }catch(Exception squish){
+                        Log.e("Error"," Error in getDataList");
+                    }
+                }
+                return result;
+            }
+
+            /** S'éxécute à la suite du doInBackGround
+             * @param result prend en paramètre le result renvoyé par le doInBackGround **/
+            @Override
+            protected void onPostExecute(String result){
+                try {
+                    Log.e("error", result);
+                    /** Transforme de result en une list de Json qui seront associé a une publication pour etre en suite retourné
+                     * au FileArrayAdapter **/
+                    JSONArray jsonObj = new JSONArray(result);
+                    for(int i=0;i<jsonObj.length();i++){
+                        JSONObject c = jsonObj.getJSONObject(i);
+                        String  idFacebook = c.getString("idFacebook");
+                        int idStatut =  c.getInt("idStatut");
+                        String nom = c.getString("nom");
+                        String  prenom = c.getString("prenom") ;
+                        int tel  = c.getInt("telephone");
+                        //int idPoste =  c.getInt("idPoste");
+                        int poid =  c.getInt("poid");
+                        int taille =  c.getInt("taille");
+                        String lebelle = c.getString("poste");
+                        String img = c.getString("image");
+                        Utilisateur user = new Utilisateur( idFacebook,idStatut, nom,  prenom,  tel,poid,taille,lebelle, img);
+
+                        users.add(user);
+                    }
+                    rosterAdapter = new RosterAdapter(roster.this, users);
+                    gridView.setAdapter(rosterAdapter);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        GetDataJSON g = new GetDataJSON();
+        g.execute();
+    }
+
+    public void getRoster4(){
+        /** Class qui récupere les pubications en question, cette class descend de Asyntask, elle ne s'éxécute pas dans le même
+         * timing que les autres activitées visibles**/
+        class GetDataJSON extends AsyncTask<Integer, Void, String> {
+
+            /** Tache qui s'éxécutera au lancement de la class, elle s'éxécute
+             * @param params prend en parametre une liste de string
+             * @return string return le resultat de la requete en string**/
+
+
+            @Override
+            protected String doInBackground(Integer[] params) {
+                DefaultHttpClient httpclient = new DefaultHttpClient(new BasicHttpParams());
+                /**Méthode GET, prend en paramètre l'URL du webservice  **/
+                HttpGet httpget = new HttpGet(TAG_URL_LIST+"4");
+                httpget.setHeader("Content-type", "application/json");
+                InputStream inputStream = null;
+                String result = null;
+                try {
+                    HttpResponse response = httpclient.execute(httpget);
+                    HttpEntity entity = response.getEntity();
+                    inputStream = entity.getContent();
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"), 8);
+                    StringBuilder sb = new StringBuilder();
+                    String line;
+                    while ((line = reader.readLine()) != null)
+                    {
+                        sb.append(line + "\n");
+                    }
+                    result = sb.toString();
+                } catch (Exception e) {
+                    Log.e("Error"," Error in getDataList");
+                }
+                finally {
+                    try{
+                        if(inputStream != null)inputStream.close();
+                    }catch(Exception squish){
+                        Log.e("Error"," Error in getDataList");
+                    }
+                }
+                return result;
+            }
+
+            /** S'éxécute à la suite du doInBackGround
+             * @param result prend en paramètre le result renvoyé par le doInBackGround **/
+            @Override
+            protected void onPostExecute(String result){
+                try {
+                    Log.e("error", result);
+                    /** Transforme de result en une list de Json qui seront associé a une publication pour etre en suite retourné
+                     * au FileArrayAdapter **/
+                    JSONArray jsonObj = new JSONArray(result);
+                    for(int i=0;i<jsonObj.length();i++){
+                        JSONObject c = jsonObj.getJSONObject(i);
+                        String  idFacebook = c.getString("idFacebook");
+                        int idStatut =  c.getInt("idStatut");
+                        String nom = c.getString("nom");
+                        String  prenom = c.getString("prenom") ;
+                        int tel  = c.getInt("telephone");
+                        //int idPoste =  c.getInt("idPoste");
+                        int poid =  c.getInt("poid");
+                        int taille =  c.getInt("taille");
+                        String lebelle = c.getString("poste");
+                        String img = c.getString("image");
+                        Utilisateur user = new Utilisateur( idFacebook,idStatut, nom,  prenom,  tel,poid,taille,lebelle, img);
 
                         users.add(user);
                     }

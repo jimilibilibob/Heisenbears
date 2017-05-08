@@ -219,7 +219,7 @@ public class Actu extends AppCompatActivity implements NavigationView.OnNavigati
             @Override
             protected String doInBackground(String... params) {
                 DefaultHttpClient httpclient = new DefaultHttpClient(new BasicHttpParams());
-                Log.e("URL",TAG_URL_LIST+idStatut+idLastPublication);
+                Log.e("URL",TAG_URL_LIST+idStatut+"-"+idLastPublication);
                 HttpGet httpget = new HttpGet(TAG_URL_LIST+idStatut+"-"+idLastPublication);
                 httpget.setHeader("Content-type", "application/json");
                 InputStream inputStream = null;

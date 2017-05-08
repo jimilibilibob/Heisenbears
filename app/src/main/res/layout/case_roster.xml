@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/custom_border">
+    android:background="@drawable/custom_border"
+    android:weightSum="1">
 
 
 
@@ -11,7 +12,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:srcCompat="@mipmap/ic_launcher"
-        android:id="@+id/imageView" />
+        android:id="@+id/imageView"
+        android:layout_weight="0.19" />
 
     <TextView
         android:text=""

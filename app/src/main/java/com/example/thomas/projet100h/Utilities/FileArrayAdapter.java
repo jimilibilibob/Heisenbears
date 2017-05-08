@@ -58,7 +58,7 @@ public class FileArrayAdapter extends ArrayAdapter<Publication> {
     private static String URL_DELETE ;
     private boolean visibility;
     private static URL URL_IMAGE ;
-    Bitmap bitmap;
+    private Bitmap bitmap;
 
     /** Créateur du FileArrayAdapter **/
     public FileArrayAdapter(Context context, int textViewResourceId,

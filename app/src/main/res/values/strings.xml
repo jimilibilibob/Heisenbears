@@ -131,4 +131,5 @@
     </string>
     <string name="back">back</string>
     <string name="send">send</string>
+    <string name="title_activity_score">score</string>
 </resources>

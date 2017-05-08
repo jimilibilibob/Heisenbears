@@ -275,7 +275,7 @@ public class profil extends AppCompatActivity  implements NavigationView.OnNavig
     /**  @param V bouton pour envoyer une notification**/
     public void notification(View V){
         Log.e("6","notification");
-        intent = new Intent(this, roster.class);
+        intent = new Intent(this, notif.class);
         startActivity(intent);
     }
 

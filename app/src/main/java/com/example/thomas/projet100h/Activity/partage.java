@@ -72,6 +72,7 @@ public class partage extends AppCompatActivity  implements NavigationView.OnNavi
     String filePath;
     String file_extn;
     Bitmap bitmap;
+    private String URL_ADD = "http://lowcost-env.pq8h39sfav.us-west-2.elasticbeanstalk.com/publi/add";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -224,11 +225,11 @@ public class partage extends AppCompatActivity  implements NavigationView.OnNavi
                     imageView.setMaxWidth(10);
                     filePath = getPath(selectedImage);
                     file_extn = filePath.substring(filePath.lastIndexOf(".") + 1);
-                    Log.e("bitmap", bitmap.getConfig().toString());
+                   /** Log.e("bitmap", bitmap.getConfig().toString());
                     Log.e("selectedImagePath", selectedImage.getPath());
 
                     Log.e("filePath", filePath);
-                    Log.e("file_extn", file_extn);
+                    Log.e("file_extn", file_extn); **/
                 }
                 if(idMedia == 3){
                     videoview.setVisibility(View.VISIBLE);
@@ -277,7 +278,7 @@ public class partage extends AppCompatActivity  implements NavigationView.OnNavi
             @Override
             protected String doInBackground(String... params) {
                 HttpClient httpclient = new DefaultHttpClient();
-                HttpPost httppost = new HttpPost("http://192.168.1.16:8080/heisenbears/publi/add");
+                HttpPost httppost = new HttpPost(URL_ADD);
                 try {
 
                     List<NameValuePair> nameValuePairs = new ArrayList<>(2);
@@ -286,8 +287,8 @@ public class partage extends AppCompatActivity  implements NavigationView.OnNavi
                     nameValuePairs.add(new BasicNameValuePair("datePublication", datePublication.toString()));
                     nameValuePairs.add(new BasicNameValuePair("texte", texte));
                     nameValuePairs.add(new BasicNameValuePair("contenuMedia", contenuMedia));
-                    nameValuePairs.add(new BasicNameValuePair("tailleCM", contenuMedia.length()+""));
-                    Log.e("contenuMedia", contenuMedia);
+                  //  nameValuePairs.add(new BasicNameValuePair("tailleCM", contenuMedia.length()+""));
+                   // Log.e("contenuMedia", contenuMedia);
                     nameValuePairs.add(new BasicNameValuePair("publique", publique+""));
                     nameValuePairs.add(new BasicNameValuePair("validation", validation+""));
                     nameValuePairs.add(new BasicNameValuePair("prioritaire", prioritaire+""));

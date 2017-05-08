@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.thomas.projet100h">
+
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -41,7 +42,11 @@
         <activity android:name=".Activity.partage" />
         <activity android:name=".Activity.jeu" />
         <activity android:name=".Activity.roster" />
-        <activity android:name=".Activity.notif"></activity>
+        <activity android:name=".Activity.notif" />
+        <activity
+            android:name=".Activity.score"
+            android:label="@string/title_activity_score"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>

@@ -44,9 +44,8 @@
 
                 <ImageView
                     android:layout_width="match_parent"
-                    android:layout_height="200dp"
+                    android:layout_height="120dp"
                     android:id="@+id/image"
-                    android:layout_weight="1"
                     android:maxWidth="100dp"
                     android:maxHeight="200dp"
                     app:srcCompat="@drawable/com_facebook_profile_picture_blank_square" />

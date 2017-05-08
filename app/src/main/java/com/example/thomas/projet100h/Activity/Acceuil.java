@@ -115,7 +115,8 @@ public class Acceuil extends AppCompatActivity
             intent = new Intent(this, roster.class);
             startActivity(intent);
         } else if (id == R.id.nav_resCal) {
-
+            intent = new Intent(this, score.class);
+            startActivity(intent);
         } else if (id == R.id.nav_profil) {
             intent = new Intent(this, profil.class);
             startActivity(intent);
