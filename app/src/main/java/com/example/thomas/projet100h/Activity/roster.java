@@ -211,7 +211,7 @@ public class roster extends AppCompatActivity
                         int poid =  c.getInt("poid");
                         int taille =  c.getInt("taille");
                         String lebelle = c.getString("poste");
-                        String img = c.getString("image");
+                        String img = c.getString("img");
                         Utilisateur user = new Utilisateur( idFacebook,idStatut, nom,  prenom,  tel,poid,taille,lebelle, img);
 
                         users.add(user);
@@ -290,7 +290,7 @@ public class roster extends AppCompatActivity
                         int poid =  c.getInt("poid");
                         int taille =  c.getInt("taille");
                         String lebelle = c.getString("poste");
-                        String img = c.getString("image");
+                        String img = c.getString("img");
                         Utilisateur user = new Utilisateur( idFacebook,idStatut, nom,  prenom,  tel,poid,taille,lebelle, img);
 
                         users.add(user);
@@ -369,7 +369,7 @@ public class roster extends AppCompatActivity
                         int poid =  c.getInt("poid");
                         int taille =  c.getInt("taille");
                         String lebelle = c.getString("poste");
-                        String img = c.getString("image");
+                        String img = c.getString("img");
                         Utilisateur user = new Utilisateur( idFacebook,idStatut, nom,  prenom,  tel,poid,taille,lebelle, img);
 
                         users.add(user);

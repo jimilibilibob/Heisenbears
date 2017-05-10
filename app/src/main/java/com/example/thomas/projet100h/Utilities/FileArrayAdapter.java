@@ -142,7 +142,7 @@ public class FileArrayAdapter extends ArrayAdapter<Publication> {
                         int id = item.getItemId();
 
                         if (id == R.id.visibility) {
-                            URL_VISIBILITY = TAG_VISIBILITY+o.getIdPublication()+"-"+visibility;
+                            URL_VISIBILITY = TAG_VISIBILITY+o.getIdPublication();
                             changeVisibility();
 
                             o.setVisibility(visibility);

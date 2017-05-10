@@ -28,7 +28,7 @@ import static android.R.attr.bitmap;
 
 
 public class RosterAdapter extends BaseAdapter  {
-    private static String TAG_IMAGE = "http://s3-us-west-2.amazonaws.com/elasticbeanstalk-us-west-2-401731657040/image/";
+    private static String TAG_IMAGE = "http://s3-us-west-2.amazonaws.com/elasticbeanstalk-us-west-2-401731657040/roster/";
     private Bitmap bitmap;
     private final Context c;
     private final List<Utilisateur> users;
