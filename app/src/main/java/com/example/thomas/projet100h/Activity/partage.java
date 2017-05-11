@@ -69,10 +69,11 @@ public class partage extends AppCompatActivity  implements NavigationView.OnNavi
     //private String KEY_IMAGE = "image";
     //private String KEY_NAME = "name";
     //private int idPublication;
-    String filePath;
-    String file_extn;
-    Bitmap bitmap;
+    private String filePath;
+    private String file_extn;
+    private Bitmap bitmap;
     private String URL_ADD = "http://lowcost-env.pq8h39sfav.us-west-2.elasticbeanstalk.com/publi/add";
+    private Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -141,20 +142,29 @@ public class partage extends AppCompatActivity  implements NavigationView.OnNavi
         int id = item.getItemId();
 
         if (id == R.id.nav_acceuil) {
+            intent = new Intent(this, Acceuil.class);
+            startActivity(intent);
         } else if (id  == R.id.nav_actu) {
-
+            intent = new Intent(this, Actu.class);
+            startActivity(intent);
         } else if (id == R.id.nav_jeu) {
-
+            intent = new Intent(this, jeu.class);
+            startActivity(intent);
         } else if (id == R.id.nav_equipe) {
-
+            intent = new Intent(this, roster.class);
+            startActivity(intent);
         } else if (id == R.id.nav_resCal) {
-
+            intent = new Intent(this, score.class);
+            startActivity(intent);
         } else if (id == R.id.nav_profil) {
-
+            intent = new Intent(this, profil.class);
+            startActivity(intent);
         }else if (id == R.id.nav_propos) {
-
+            intent = new Intent(this, Apropos.class);
+            startActivity(intent);
         }else if (id == R.id.nav_logout) {
-
+            intent = new Intent(this, pageConnection.class);
+            startActivity(intent);
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

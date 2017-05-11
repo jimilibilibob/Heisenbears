@@ -112,24 +112,26 @@ public class Actu extends AppCompatActivity implements NavigationView.OnNavigati
         if (id == R.id.nav_acceuil) {
             intent = new Intent(this, Acceuil.class);
             startActivity(intent);
-        } else if (id == R.id.nav_actu) {
-
+        } else if (id  == R.id.nav_actu) {
         } else if (id == R.id.nav_jeu) {
-
+            intent = new Intent(this, jeu.class);
+            startActivity(intent);
         } else if (id == R.id.nav_equipe) {
-
+            intent = new Intent(this, roster.class);
+            startActivity(intent);
         } else if (id == R.id.nav_resCal) {
-
+            intent = new Intent(this, score.class);
+            startActivity(intent);
         } else if (id == R.id.nav_profil) {
             intent = new Intent(this, profil.class);
             startActivity(intent);
         }else if (id == R.id.nav_propos) {
-
+            intent = new Intent(this, Apropos.class);
+            startActivity(intent);
         }else if (id == R.id.nav_logout) {
             intent = new Intent(this, pageConnection.class);
             startActivity(intent);
         }
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;

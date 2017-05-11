@@ -121,7 +121,8 @@ public class Acceuil extends AppCompatActivity
             intent = new Intent(this, profil.class);
             startActivity(intent);
         }else if (id == R.id.nav_propos) {
-
+            intent = new Intent(this, Apropos.class);
+            startActivity(intent);
         }else if (id == R.id.nav_logout) {
             intent = new Intent(this, pageConnection.class);
             startActivity(intent);

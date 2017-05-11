@@ -123,6 +123,8 @@ public class roster extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_acceuil) {
+            intent = new Intent(this, Acceuil.class);
+            startActivity(intent);
         } else if (id  == R.id.nav_actu) {
             intent = new Intent(this, Actu.class);
             startActivity(intent);
@@ -130,14 +132,15 @@ public class roster extends AppCompatActivity
             intent = new Intent(this, jeu.class);
             startActivity(intent);
         } else if (id == R.id.nav_equipe) {
-
         } else if (id == R.id.nav_resCal) {
-
+            intent = new Intent(this, score.class);
+            startActivity(intent);
         } else if (id == R.id.nav_profil) {
             intent = new Intent(this, profil.class);
             startActivity(intent);
         }else if (id == R.id.nav_propos) {
-
+            intent = new Intent(this, Apropos.class);
+            startActivity(intent);
         }else if (id == R.id.nav_logout) {
             intent = new Intent(this, pageConnection.class);
             startActivity(intent);

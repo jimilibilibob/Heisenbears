@@ -46,6 +46,10 @@
         <activity
             android:name=".Activity.score"
             android:label="@string/title_activity_score"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".Activity.Apropos"
+            android:label="@string/title_activity_apropos"
             android:theme="@style/AppTheme"></activity>
     </application>
 

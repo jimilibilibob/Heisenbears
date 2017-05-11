@@ -150,7 +150,7 @@ public class Connection extends AsyncTask<String, Void, String> {
             @Override
             protected String doInBackground(String... params) {
                 DefaultHttpClient httpclient = new DefaultHttpClient(new BasicHttpParams());
-                URL_ADD = TAG_URL_ADD+user.getIdFacebook()+"-"+user.getPrenom()+"-"+user.getNom();
+                URL_ADD = TAG_URL_ADD+user.getIdFacebook()+"-"+user.getNom()+"-"+user.getPrenom();
                 Log.e("URL_ADD", URL_ADD);
                 HttpGet httpget = new HttpGet(URL_ADD);
                 // Depends on your web service

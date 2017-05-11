@@ -19,59 +19,68 @@
         android:layout_marginTop="60dp">
 
         <GridView
-            android:layout_width="400dp"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/grid"
             android:columnWidth="100dp"
             android:numColumns="auto_fit"
             />
 
-        <LinearLayout
-            android:orientation="vertical" android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/rosterDetail" >
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-
-            <Button
-                android:text="@string/back"
-                android:layout_width="match_parent"
+            <LinearLayout
+                android:orientation="vertical" android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/button3"
-                android:onClick="change"/>
+                android:id="@+id/rosterDetail" >
 
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:srcCompat="@mipmap/ic_launcher"
-                android:id="@+id/imageViewRoster" />
 
-            <TextView
-                android:text=""
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/nomRoster"
-                android:textAlignment="center"/>
+                <Button
+                    android:text="@string/back"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/button3"
+                    android:onClick="change"/>
 
-            <TextView
-                android:text=""
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/posteRoster"
-                android:textAlignment="center" />
+                <ImageView
+                    android:layout_width="200dp"
+                    android:layout_height="200dp"
+                    app:srcCompat="@drawable/image_connection"
+                    android:id="@+id/imageViewRoster"
+                    android:maxHeight="200dp"
+                    android:maxWidth="200dp"
+                    android:layout_marginLeft="50dp" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/poidRoster"
-                android:textAlignment="center" />
+                <TextView
+                    android:text=""
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/nomRoster"
+                    android:textAlignment="center"/>
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/tailleRoster"
-                android:textAlignment="center" />
+                <TextView
+                    android:text=""
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/posteRoster"
+                    android:textAlignment="center" />
 
-        </LinearLayout>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/poidRoster"
+                    android:textAlignment="center" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tailleRoster"
+                    android:textAlignment="center" />
+
+            </LinearLayout>
+        </ScrollView>
+
     </LinearLayout>
 
 </RelativeLayout>

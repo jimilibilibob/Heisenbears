@@ -1,35 +1,29 @@
 package com.example.thomas.projet100h.Activity;
 
-import android.app.Notification;
-import android.app.NotificationManager;
 import android.content.Intent;
+import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.thomas.projet100h.R;
 
-public class notif extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class Apropos extends AppCompatActivity
+        implements NavigationView.OnNavigationItemSelectedListener {
 
     private Intent intent;
-    private Button sndNotificationBtn;
-    private EditText editText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_notif);
-
+        setContentView(R.layout.activity_apropos);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -41,17 +35,7 @@ public class notif extends AppCompatActivity implements NavigationView.OnNavigat
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        editText = (EditText) findViewById(R.id.editText);
 
-        sndNotificationBtn = (Button) findViewById(R.id.button);
-        sndNotificationBtn.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View arg0) {
-                Toast.makeText(getBaseContext(), "Envoie d'une notification", Toast.LENGTH_SHORT).show();
-                createNotification();
-            }
-        });
     }
 
     /** Fonction permettant de quitter le menu **/
@@ -93,8 +77,6 @@ public class notif extends AppCompatActivity implements NavigationView.OnNavigat
             intent = new Intent(this, profil.class);
             startActivity(intent);
         }else if (id == R.id.nav_propos) {
-            intent = new Intent(this, Apropos.class);
-            startActivity(intent);
         }else if (id == R.id.nav_logout) {
             intent = new Intent(this, pageConnection.class);
             startActivity(intent);
@@ -104,19 +86,5 @@ public class notif extends AppCompatActivity implements NavigationView.OnNavigat
         return true;
     }
 
-    private final void createNotification(){
-        final NotificationManager mNotification = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
 
-
-
-        Notification.Builder builder = new Notification.Builder(this)
-                .setWhen(System.currentTimeMillis())
-                //  .setSmallIcon(R.drawable.notification)
-                .setContentTitle("Heisenbears")
-                .setContentText(editText.getText())
-                .setSmallIcon(R.drawable.logo);
-
-
-        mNotification.notify(1, builder.build());
-    }
 }

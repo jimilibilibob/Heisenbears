@@ -73,17 +73,18 @@ public class jeu extends AppCompatActivity
             intent = new Intent(this, Actu.class);
             startActivity(intent);
         } else if (id == R.id.nav_jeu) {
-            intent = new Intent(this, jeu.class);
-            startActivity(intent);
         } else if (id == R.id.nav_equipe) {
             intent = new Intent(this, roster.class);
             startActivity(intent);
         } else if (id == R.id.nav_resCal) {
+            intent = new Intent(this, score.class);
+            startActivity(intent);
         } else if (id == R.id.nav_profil) {
             intent = new Intent(this, profil.class);
             startActivity(intent);
         }else if (id == R.id.nav_propos) {
-
+            intent = new Intent(this, Apropos.class);
+            startActivity(intent);
         }else if (id == R.id.nav_logout) {
             intent = new Intent(this, pageConnection.class);
             startActivity(intent);
