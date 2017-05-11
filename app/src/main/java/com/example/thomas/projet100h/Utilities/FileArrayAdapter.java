@@ -244,9 +244,6 @@ public class FileArrayAdapter extends ArrayAdapter<Publication> {
                 video.setVisibility(View.VISIBLE);
                 if (!texte.equals("null") && !media.equals("null")) {
                     texteV.setText(texte);
-                    int imageResource = c.getResources().getIdentifier(media, null, c.getPackageName());
-                    Drawable image2 = c.getResources().getDrawable(imageResource);
-                    image.setImageDrawable(image2);
                 }
                 if (!texte.equals("null") && media.equals("null")) {
                     video.setVisibility(View.GONE);
@@ -272,7 +269,6 @@ public class FileArrayAdapter extends ArrayAdapter<Publication> {
     /** Fonction qui retourne l'image qui est stockée sur le serveur
      * @param name nom de l'image**/
     private void Image(String name){
-        final Bitmap[] bmp = new Bitmap[1];
         final String imageName = name;
         class GetDataJSON extends AsyncTask<Void, Void, Bitmap> {
 

@@ -1,6 +1,7 @@
 package com.example.thomas.projet100h.entities;
 
 
+import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -37,6 +38,9 @@ public class Utilisateur {
     private int posteI;
     private final static String URL_STRING = "http://lowcost-env.pq8h39sfav.us-west-2.elasticbeanstalk.com/poste/";
     private String img;
+    private Bitmap bitmap;
+
+
 
     /** Créateur d'un utilisateur **/
     public Utilisateur(String idFacebook, Integer idStatut,
@@ -144,6 +148,14 @@ public class Utilisateur {
 
     public int getNumero() {
         return numero;
+    }
+
+    public Bitmap getBitmap() {
+        return bitmap;
+    }
+
+    public void setBitmap(Bitmap bitmap) {
+        this.bitmap = bitmap;
     }
 
 }

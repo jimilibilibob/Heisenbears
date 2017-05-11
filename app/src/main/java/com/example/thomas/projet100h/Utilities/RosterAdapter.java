@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -74,8 +75,11 @@ public class RosterAdapter extends BaseAdapter  {
 
             TextView poste = (TextView) gridView.findViewById(R.id.poste);
             poste.setText(users.get(position).getPoste());
+            if(!users.get(position).getImg().equals("image")){
+                Image(users.get(position).getImg());
+            }
 
-            Image(users.get(position).getImg());
+
         } else {
             gridView = convertView;
         }
@@ -85,8 +89,8 @@ public class RosterAdapter extends BaseAdapter  {
     }
 
     private void Image(String name){
-        final Bitmap[] bmp = new Bitmap[1];
         final String imageName = name;
+
         class GetDataJSON extends AsyncTask<Void, Void, Bitmap> {
 
             @Override
@@ -95,6 +99,7 @@ public class RosterAdapter extends BaseAdapter  {
                 HttpURLConnection urlConnection = null;
                 try {
                     URL_IMAGE = new URL(TAG_IMAGE+imageName);
+                    Log.e("Pos3",TAG_IMAGE+imageName);
                     urlConnection = (HttpURLConnection) URL_IMAGE.openConnection();
                     int statusCode = urlConnection.getResponseCode();
                     if (statusCode != HttpStatus.SC_OK) {
@@ -105,7 +110,6 @@ public class RosterAdapter extends BaseAdapter  {
                     if (inputStream != null) {
                         BitmapFactory.Options options = new BitmapFactory.Options();
                         bitmap = BitmapFactory.decodeStream(inputStream,null,options);
-
 
                         return bitmap;
                     }
@@ -123,7 +127,6 @@ public class RosterAdapter extends BaseAdapter  {
 
             @Override
             protected void onPostExecute(Bitmap bmp){
-
 
                 img.setImageBitmap(bmp);
 
