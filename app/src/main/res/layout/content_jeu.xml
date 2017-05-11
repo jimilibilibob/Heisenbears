@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -8,7 +7,8 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_marginTop="60dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -18,28 +18,42 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/rule1"
-                android:text="@string/Base" />
+                android:id="@+id/Base"
+                android:text="@string/Base"
+                android:padding="5dp"
+                android:textSize="18sp"/>
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/Deroulement" />
+                android:id="@+id/Deroulement"
+                android:padding="5dp"
+                android:text="@string/Deroulement"
+                android:textSize="18sp"/>
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/Points" />
+                android:id="@+id/Points"
+                android:layout_margin="5dp"
+                android:text="@string/LeScore"
+                android:textSize="18sp"/>
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/PostesAtt" />
+                android:id="@+id/PostesAtt"
+                android:layout_margin="5dp"
+                android:text="@string/PostesAtt"
+                android:textSize="16sp"/>
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/PostesDef" />
+                android:id="@+id/PostesDef"
+                android:layout_margin="5dp"
+                android:text="@string/PostesAtt"
+                android:textSize="18sp"/>
         </LinearLayout>
     </ScrollView>
 
