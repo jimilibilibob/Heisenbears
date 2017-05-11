@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 import com.example.thomas.projet100h.R;
 
@@ -16,6 +17,7 @@ public class jeu extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener  {
 
     private Intent intent;
+    private TextView txtR1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +34,8 @@ public class jeu extends AppCompatActivity
         toggle.syncState();
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        txtR1 = (TextView) findViewById(R.id.rule1);
     }
 
     /** Fonction permettant de quitter le menu **/
