@@ -19,27 +19,27 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/rule1"
-                android:text="@string/back" />
+                android:text="@string/Base" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/rule2" />
+                android:id="@+id/Deroulement" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/rule3" />
+                android:id="@+id/Points" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/rule4" />
+                android:id="@+id/PostesAtt" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/rule5" />
+                android:id="@+id/PostesDef" />
         </LinearLayout>
     </ScrollView>
 

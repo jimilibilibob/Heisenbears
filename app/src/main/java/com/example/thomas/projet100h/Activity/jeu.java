@@ -17,7 +17,11 @@ public class jeu extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener  {
 
     private Intent intent;
-    private TextView txtR1;
+    private TextView base;
+    private TextView drlmt;
+    private TextView points;
+    private TextView attPos;
+    private TextView defPos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +39,11 @@ public class jeu extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        txtR1 = (TextView) findViewById(R.id.rule1);
+        base = (TextView) findViewById(R.id.Base);
+        drlmt = (TextView) findViewById(R.id.Deroulement);
+        points = (TextView) findViewById(R.id.Points);
+        attPos = (TextView) findViewById(R.id.PostesAtt);
+        defPos = (TextView) findViewById(R.id.PostesDef);
     }
 
     /** Fonction permettant de quitter le menu **/
