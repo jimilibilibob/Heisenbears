@@ -40,7 +40,6 @@
         android:text="HeisenBears"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:textColor="@color/colorAccent"
-        android:textAlignment="center"
         android:textSize="20sp" />
 
 </LinearLayout>
