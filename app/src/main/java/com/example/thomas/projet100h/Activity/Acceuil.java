@@ -134,7 +134,8 @@ public class Acceuil extends AppCompatActivity
 
     /** Affiche dans le listeView les 5 dernières publciation**/
     public void getDataList(){
-        /** Class qui récupere les pubications en question, cette class descend de Asyntask, elle ne s'éxécute pas dans le même
+        /** Class qui récupere les pubications en question, cette class descend de Asyntask,
+         *  elle ne s'éxécute pas dans le même
          * timing que les autres activitées visibles**/
         class GetDataJSON extends AsyncTask<String, Void, String> {
 

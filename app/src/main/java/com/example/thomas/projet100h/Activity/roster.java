@@ -391,8 +391,8 @@ public class roster extends AppCompatActivity
         rosterDetail.setVisibility(View.VISIBLE);
 
         poste.setText(users.get(pos).getPoste());
-        poid.setText(users.get(pos).getPoid()+"");
-        taille.setText(users.get(pos).getTaille()+"");
+        poid.setText(R.string.poid+" "+ users.get(pos).getPoid()+"kg");
+        taille.setText(R.string.taille+" "+ users.get(pos).getTaille()+"cm");
         nom.setText(users.get(pos).getNom()+" "+users.get(pos).getPrenom());
     }
 
